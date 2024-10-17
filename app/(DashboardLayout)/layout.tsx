@@ -3,6 +3,7 @@ import { styled, Container, Box } from "@mui/material";
 import React, { useState } from "react";
 import Header from "@/app/(DashboardLayout)/layout/header/Header";
 import Sidebar from "@/app/(DashboardLayout)/layout/sidebar/Sidebar";
+import useStore from "@/hooks/zustand";
 
 
 const MainWrapper = styled("div")(() => ({
@@ -31,10 +32,11 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const { getLang } = useStore();
   const [isSidebarOpen] = useState(true);
   const [isMobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   return (
-    <MainWrapper className="mainwrapper" >
+    <MainWrapper className="mainwrapper" dir={getLang()==="en"?"ltr":"rtl"} >
       {/* ------------------------------------------- */}
       {/* Sidebar */}
       {/* ------------------------------------------- */}

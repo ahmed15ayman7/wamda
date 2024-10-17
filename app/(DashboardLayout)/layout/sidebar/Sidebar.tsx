@@ -2,6 +2,7 @@ import { useMediaQuery, Box, Drawer } from "@mui/material";
 import SidebarItems from "./SidebarItems";
 import { Upgrade } from "./Updrade";
 import { Sidebar, Logo } from 'react-mui-sidebar';
+import useStore from "@/hooks/zustand";
 
 interface ItemType {
   isMobileSidebarOpen: boolean;
@@ -18,7 +19,7 @@ const MSidebar = ({
   const lgUp = useMediaQuery((theme: any) => theme.breakpoints.up("lg"));
 
   const sidebarWidth = "270px";
-
+  const { getLang } = useStore();
   // Custom CSS for short scrollbar
   const scrollbarStyles = {
     '&::-webkit-scrollbar': {
@@ -44,7 +45,7 @@ const MSidebar = ({
         {/* Sidebar for desktop */}
         {/* ------------------------------------------- */}
         <Drawer
-          anchor="left"
+          anchor={getLang()==="en"?"left":"right"}
           open={isSidebarOpen}
           variant="permanent"
           PaperProps={{
@@ -90,7 +91,7 @@ const MSidebar = ({
 
   return (
     <Drawer
-      anchor="left"
+    anchor={getLang()==="en"?"left":"right"}
       open={isMobileSidebarOpen}
       onClose={onSidebarClose}
       variant="temporary"
@@ -110,7 +111,7 @@ const MSidebar = ({
           collapsewidth="80px"
           isCollapse={false}
           mode="light"
-          direction="ltr"
+          anchor={getLang()==="en"?"ltr":"rtl"}
           themeColor="#5d87ff"
           themeSecondaryColor="#49beff"
           showProfile={false}

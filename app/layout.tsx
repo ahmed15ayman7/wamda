@@ -8,6 +8,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { baselightTheme } from "@/utils/theme/DefaultColors";
 import "react-toastify/dist/ReactToastify.css";
 import InfintyProvider from "@/components/providers/InfintyProvider";
+import useStore from "@/hooks/zustand";
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -24,11 +25,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { getLang } = useStore();
   return (
     <InfintyProvider>
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        dir={getLang()==="ar"?"rtl":"ltr"}
         >
         <ThemeProvider theme={baselightTheme}>
         <CssBaseline />

@@ -66,6 +66,7 @@
     "errorFetching": "حدث خطأ أثناء جلب تفاصيل المنتج."
   },
   "ProductsPage":{
+    "addProduct":"إضافة منتج",
     "loadingCategories": "جارٍ تحميل الفئات...",
     "search": "بحث",
     "addCategory": "إضافة فئة",

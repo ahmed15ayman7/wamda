@@ -67,7 +67,7 @@
   },
   "ProductsPage":{
     "loadingCategories": "Loading categories...",
-
+    "addProduct":"Add Product",
     "search": "Search",
     "addCategory": "Add Category",
     "category": "Category",

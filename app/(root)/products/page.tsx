@@ -91,6 +91,7 @@ const page = () => {
 <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', mb: 2 }}>
         <TextField
           label={t('search')}
+          className=' flex flex-grow'
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           variant="outlined"

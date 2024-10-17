@@ -10,6 +10,7 @@ import { Alert, Spin } from 'antd';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
+import useStore from '@/hooks/zustand';
 
 const ProductsPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -78,16 +79,17 @@ const ProductsPage = () => {
       </div>
     );
   }
-
+  const { getLang } = useStore();
   return (
     <div>
-      <Box sx={{ display: 'flex', gap: "10px", flexWrap: "wrap", alignItems: 'center', }}>
-        <div className="flex justify-between items-center max-sm:w-full flex-grow mb-2">
+      <Box sx={{ display: 'flex', gap: "10px", flexWrap: "wrap", alignItems: 'center', }} dir={getLang()==="en"?"ltr":"rtl"}>
+        <div className="flex justify-between items-center max-sm:w-full gap-3 flex-grow mb-2">
           <TextField
             label={t('search')}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             variant="outlined"
+            className=' flex flex-grow'
           />
           <Tooltip title={t('addCategory')} arrow>
             <Link href="/dashboard/utilities/categories/add" passHref>
@@ -95,6 +97,8 @@ const ProductsPage = () => {
                 variant="contained"
                 color="primary"
                 startIcon={<IconPlus />}
+                className='flex gap-4'
+                
                 component={motion.div}
                 whileHover={{ scale: 1.1 }}
               >
@@ -107,7 +111,7 @@ const ProductsPage = () => {
           <Products refetch={refetch} />
           <Tooltip title="Add a new product" arrow>
             <Link href="/dashboard/utilities/products/add" passHref>
-              <Button variant="contained" color="primary" startIcon={<IconLayoutGridAdd />}>
+              <Button variant="contained" color="primary" className='flex gap-4' startIcon={<IconLayoutGridAdd />}>
                 {t('addProduct')}
               </Button>
             </Link>

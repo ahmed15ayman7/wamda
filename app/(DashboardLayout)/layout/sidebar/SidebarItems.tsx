@@ -4,14 +4,15 @@ import { usePathname } from "next/navigation";
 import { Box, List } from "@mui/material";
 import NavItem from "./NavItem";
 import NavGroup from "./NavGroup/NavGroup";
+import useStore from "@/hooks/zustand";
 
 const SidebarItems = ({ toggleMobileSidebar }: {toggleMobileSidebar?:(event: React.MouseEvent<HTMLElement>) => void}) => {
   const pathname = usePathname();
   const pathDirect = pathname;
-
+  const { getLang } = useStore();
   return (
     <Box sx={{ px: 3 }}>
-      <List sx={{ pt: 0 }} className="sidebarNav" component="div">
+      <List sx={{ pt: 0 }} className="sidebarNav" component="div" dir={getLang()==="en"?"ltr":"rtl"}>
         {Menuitems.map((item) => {
           // {/********SubHeader**********/}
           if (item.subheader) {

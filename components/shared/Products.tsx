@@ -186,14 +186,14 @@ const Products = ({ refetch }: { refetch: () => void }) => {
 
   return (
     <div>
-      <Button variant="contained" color="primary" onClick={handleToggleDialog} startIcon={<IconUpload size={24} />}>
+      <Button variant="contained" color="primary" className='flex gap-4' onClick={handleToggleDialog} startIcon={<IconUpload size={24} />}>
         {t('uploadExcelFile')}
       </Button>
 
       <AnimatePresence>
         {open && (
           <Dialog open={open} onClose={handleToggleDialog} fullWidth maxWidth="sm">
-            <DialogTitle>{t('uploadExcelFile')}</DialogTitle>
+            <DialogTitle >{t('uploadExcelFile')}</DialogTitle>
 
             <DialogContent>
               <StyledLabel htmlFor="file-upload">{t('chooseFile')}</StyledLabel>

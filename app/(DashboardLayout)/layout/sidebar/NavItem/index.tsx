@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import useStore from "@/hooks/zustand";
 
 type NavGroup = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -66,9 +67,9 @@ const NavItem = ({ item, level, pathDirect, onClick }: ItemType) => {
       },
     },
   }));
-
+  const { getLang } = useStore();
   return (
-    <List component="div" disablePadding key={item.id}>
+    <List component="div" disablePadding key={item.id} dir={getLang()==="en"?"ltr":"rtl"}>
       <ListItemStyled>
         <ListItemButton
           component={Link}
@@ -77,6 +78,7 @@ const NavItem = ({ item, level, pathDirect, onClick }: ItemType) => {
           selected={pathDirect === item.href}
           target={item.external ? "_blank" : ""}
           onClick={onClick}
+          dir={getLang()==="en"?"ltr":"rtl"}
         >
           <ListItemIcon
             sx={{
@@ -87,7 +89,7 @@ const NavItem = ({ item, level, pathDirect, onClick }: ItemType) => {
           >
             {itemIcon}
           </ListItemIcon>
-          <ListItemText>
+          <ListItemText dir={getLang()==="en"?"ltr":"rtl"}>
             <>{t(item.title2)}</>
           </ListItemText>
         </ListItemButton>

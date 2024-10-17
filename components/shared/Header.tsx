@@ -1,3 +1,5 @@
+
+"use client"
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { IconHome, IconShoppingCart, IconList, IconInfoCircle, IconMenu, IconX } from '@tabler/icons-react';
@@ -16,14 +18,10 @@ const Header = () => {
   const toggleDrawer = (open:boolean) => () => {
     setDrawerOpen(open);
   };
-  
-  
   const { language, setLanguage, getLang } = useStore();
   const [locale, setLocale] = useState<'en' | 'ar'>(language);
-  
-  // Use the useTranslation hook
-  const t = useTranslations("header");
 
+  const t = useTranslations("header");
   useEffect(() => {
     const currentLang = getLang();
     if (currentLang) {
