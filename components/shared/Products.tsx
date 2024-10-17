@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import styled from "@emotion/styled";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useTranslations } from 'next-intl';
 
 const FileInput = styled.input`
   padding: 0.75rem;
@@ -51,10 +52,11 @@ interface ProductFormData {
   productImage: string;
 }
 
-const Products= ({refetch}:{refetch:()=>void}) => {
+const Products = ({ refetch }: { refetch: () => void }) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [file, setFile] = useState<File | null>(null);
+  const t = useTranslations('Products'); // useTranslations to get translations
 
   const handleToggleDialog = () => {
     setOpen(!open);
@@ -95,7 +97,7 @@ const Products= ({refetch}:{refetch:()=>void}) => {
   const handleSubmit = async () => {
     if (file) {
       console.log("Submitting file:", file);
-      const loadingToastId = toast.loading("Uploading products...");
+      const loadingToastId = toast.loading(t('uploadingProducts'));
       setLoading(true);
   
       const reader = new FileReader();
@@ -110,17 +112,15 @@ const Products= ({refetch}:{refetch:()=>void}) => {
         let successCount = 0;
         let errorCount = 0;
   
-        // ابدأ من الصف الثاني (تجاهل الصف الأول)
         for (let i = 1; i < jsonData.length; i++) {
           const row = jsonData[i];
           console.log(`Processing row ${i}:`, row);
   
           if (row.length < 12 || row.some((cell: any) => cell === undefined || cell === "")) {
             console.warn(`Skipping row ${i}: invalid data`);
-            if (row.length===0) {
-            }else{
+            if (row.length === 0) {
+            } else {
               errorCount++;
-
             }
             continue;
           }
@@ -128,9 +128,8 @@ const Products= ({refetch}:{refetch:()=>void}) => {
           try {
             let productImageUrl = "";
   
-            // تحقق من وجود العمود 13 (الصورة)
             if (row.length === 13 && row[12]) {
-              const productImageBlob = row[12]; // العمود المخصص للصورة
+              const productImageBlob = row[12];
               const base64Image = await getImageBase64(productImageBlob);
               productImageUrl = base64Image;
               console.log(`Product image for row ${i} converted to Base64`);
@@ -149,7 +148,7 @@ const Products= ({refetch}:{refetch:()=>void}) => {
               unitName2: row[9]?.toString() || "",
               exhibitSalePrice: Number(row[10]) || 0,
               websiteSalePrice: Number(row[11]) || 0,
-              productImage: productImageUrl, // إذا كانت الصورة موجودة، يتم تعيينها
+              productImage: productImageUrl,
             };
   
             console.log(`Formatted product for row ${i}:`, formattedProduct);
@@ -167,13 +166,13 @@ const Products= ({refetch}:{refetch:()=>void}) => {
   
         console.log(`Upload completed: ${successCount} success, ${errorCount} errors`);
         if (successCount > 0 && errorCount === 0) {
-          toast.success(`${successCount} products uploaded successfully!`);
-          refetch()
+          toast.success(t('productsUploadedSuccess', { count: successCount }));
+          refetch();
         } else if (successCount > 0 && errorCount > 0) {
-          toast.warn(`${successCount} products uploaded successfully, but ${errorCount} failed.`);
+          toast.warn(t('productsUploadedPartial', { success: successCount, error: errorCount }));
           refetch();
         } else {
-          toast.error(`All products failed to upload.`);
+          toast.error(t('allProductsFailed'));
         }
   
         handleToggleDialog();
@@ -181,44 +180,41 @@ const Products= ({refetch}:{refetch:()=>void}) => {
       reader.readAsArrayBuffer(file);
     } else {
       console.warn("No file selected");
-      toast.error("Please select a file before submitting.");
+      toast.error(t('noFileSelected'));
     }
   };
-  
 
   return (
     <div>
       <Button variant="contained" color="primary" onClick={handleToggleDialog} startIcon={<IconUpload size={24} />}>
-        Add Excel File
+        {t('uploadExcelFile')}
       </Button>
 
       <AnimatePresence>
         {open && (
           <Dialog open={open} onClose={handleToggleDialog} fullWidth maxWidth="sm">
-            <DialogTitle>Upload Excel File</DialogTitle>
+            <DialogTitle>{t('uploadExcelFile')}</DialogTitle>
 
             <DialogContent>
-              <StyledLabel htmlFor="file-upload">Choose a file to upload:</StyledLabel>
+              <StyledLabel htmlFor="file-upload">{t('chooseFile')}</StyledLabel>
 
               <FileInput
                 type="file"
                 id="file-upload"
                 accept=".xlsx, .xls"
                 onChange={handleFileChange}
-                title="Choose an Excel file to upload"
+                title={t('chooseFile')}
               />
             </DialogContent>
 
             <DialogActions>
-              <Button onClick={handleToggleDialog} color="primary">
-                Cancel
+              <Button onClick={handleToggleDialog} color="secondary">
+                {t('cancel')}
               </Button>
               <Button onClick={handleSubmit} color="primary" disabled={loading}>
-                Submit
+                {loading ? t('uploadingProducts') : t('submit')}
               </Button>
             </DialogActions>
-
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} />
           </Dialog>
         )}
       </AnimatePresence>

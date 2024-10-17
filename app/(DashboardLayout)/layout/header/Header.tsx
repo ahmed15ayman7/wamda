@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Box, AppBar, Toolbar, styled, Stack, IconButton, Badge, Button } from '@mui/material';
+import { Box, AppBar, Toolbar, styled, Stack, IconButton, Button } from '@mui/material';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 // components
 import Profile from './Profile';
-import { IconBellRinging, IconMenu } from '@tabler/icons-react';
-import { useQuery } from '@tanstack/react-query';
+import {  IconMenu } from '@tabler/icons-react';
+
 import useStore from '@/hooks/zustand';
 
 

@@ -6,19 +6,18 @@ import { useParams } from 'next/navigation';
 import {
   Box,
   Typography,
-  Card,
-  CardContent,
-  Grid,
   Button,
   Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
-  TextField,
+  Grid,
 } from '@mui/material';
 import Blog from '@/app/(DashboardLayout)/components/dashboard/Blog';
 import { Spin } from 'antd';
 import CategoryForm from '@/components/forms/CategoryForm';
+import { useTranslations } from 'next-intl';
+
 const fetchCategory = async (id: string) => {
   const { data } = await axios.get(`/api/categories/${id}`);
   return data;
@@ -32,8 +31,11 @@ const updateCategory = async (id: string, updatedData: any) => {
 const CategoryDetailsPage = () => {
   const params = useParams(); 
   const { id } = params;
-  const [openEditDialog, setOpenEditDialog] = useState(false); // إدارة الـ Dialog
-  const [selectedCategory, setSelectedCategory] = useState<any>(null); // الفئة المختارة للتحرير
+  const [openEditDialog, setOpenEditDialog] = useState(false); 
+  const [editedCategory, setEditedCategory] = useState({
+    name: '',
+    description: '',
+  });
 
   const { data: category, error, isLoading, refetch } = useQuery({
     queryKey: ['category', id],
@@ -41,28 +43,15 @@ const CategoryDetailsPage = () => {
     enabled: !!id,
   });
 
-  // State لإدارة ظهور الـ Dialog وبيانات الفئة المعدلة
-  const [open, setOpen] = useState(false);
-  const [editedCategory, setEditedCategory] = useState({
-    name: '',
-    description: '',
-  });
+  const t = useTranslations('categoryDetails'); // استخدام 'categoryDetails' للحصول على الترجمة
 
   const handleEditClick = () => {
     setEditedCategory({ name: category.name, description: category.description || '' });
-    setOpen(true);
+    setOpenEditDialog(true);
   };
 
   const handleCloseEditDialog = () => {
-    setOpenEditDialog(false); // إغلاق الـ Dialog
-    setSelectedCategory(null); // إعادة تعيين الفئة المختارة
-  };
-
-  // حفظ التعديلات
-  const handleSave = async () => {
-    await updateCategory(id as string, editedCategory);
-    setOpen(false);
-    refetch(); // إعادة جلب البيانات بعد التحديث
+    setOpenEditDialog(false); 
   };
 
   if (isLoading) {
@@ -79,47 +68,45 @@ const CategoryDetailsPage = () => {
 
   return (
     <Box p={4}>
-      {/* زر التعديل */}
       <Button variant="contained" color="primary" onClick={handleEditClick}>
-        Edit
+        {t('edit')}
       </Button>
 
-      {/* عرض معلومات الفئة */}
       <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold' }}>
         {category.name}
       </Typography>
       <Typography variant="subtitle1" gutterBottom sx={{ fontStyle: 'italic', color: 'gray' }}>
-        {category.description || 'No description available'}
+        {category.description || t('noDescription')}
       </Typography>
 
       <Typography variant="h6" gutterBottom>
-        Products:
+        {t('products')}
       </Typography>
 
       <Grid container spacing={3}>
         {category.products.length > 0 ? (
           <Blog products={category.products} role='admin' />
         ) : (
-          <Typography variant="body1">No products associated with this category.</Typography>
+          <Typography variant="body1">{t('noProducts')}</Typography>
         )}
       </Grid>
 
       <Dialog open={openEditDialog} onClose={handleCloseEditDialog} fullWidth maxWidth="sm">
-        <DialogTitle>Edit Category</DialogTitle>
+        <DialogTitle>{t('dialogTitle')}</DialogTitle>
         <DialogContent>
           {category && (
             <CategoryForm
               categoryData={category} 
               onSuccess={() => {
                 refetch(); 
-                handleCloseEditDialog(); // إغلاق الـ Dialog بعد النجاح
+                handleCloseEditDialog(); 
               }}
             />
           )}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseEditDialog} color="secondary">
-            Cancel
+            {t('cancel')}
           </Button>
         </DialogActions>
       </Dialog>

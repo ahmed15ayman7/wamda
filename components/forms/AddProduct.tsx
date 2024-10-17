@@ -12,6 +12,7 @@ import PencilIcon from "../cards/PencilIcon";
 import { toast } from "react-toastify";
 import { Rating } from "@mui/material";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 export interface ProductFormData {
   _id: string;
@@ -43,6 +44,7 @@ interface ProductFormProps {
 }
 
 const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
+  const t = useTranslations('ProductForm');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [productImagePreview, setProductImagePreview] = useState<string | null>(null);
   let router=useRouter()
@@ -109,122 +111,116 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
 
   return (
     <div className="max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-lg">
-      <h2 className="text-2xl font-bold mb-4">{product ? "Edit Product" : "Add New Product"}</h2>
+      <h2 className="text-2xl font-bold mb-4">{product ? t('editProduct') : t('addNewProduct')}</h2>
       <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4">
-      <div className="grid grid-cols-2 max-sm:grid-cols-1 gap-4">
-       
-        {/* Barcode */}
-       
-        <div>
-          <label className="block text-sm font-medium">Barcode</label>
-          <Controller
-            name="barcode"
-            control={control}
-            render={({ field }) => (
-              <input
-                {...field}
-                className="border border-gray-300 rounded-md p-2 w-full"
-                placeholder="Enter barcode"
-              />
-            )}
-          />
-          {errors.barcode && <span className="text-red-500">{errors.barcode.message}</span>}
-        </div>
-
-        {/* Item Name */}
-        <div>
-          <label className="block text-sm font-medium">Item Name</label>
-          <Controller
-            name="itemName"
-            control={control}
-            render={({ field }) => (
-              <input
-                {...field}
-                className="border border-gray-300 rounded-md p-2 w-full"
-                placeholder="Enter item name"
-              />
-            )}
-          />
-          {errors.itemName && <span className="text-red-500">{errors.itemName.message}</span>}
-        </div>
-      
-
-        {/* Unit */}
-
-        <div>
-          <label className="block text-sm font-medium">Unit</label>
-          <Controller
-            name="unit"
-            control={control}
-            render={({ field }) => (
-              <input
-                {...field}
-                className="border border-gray-300 rounded-md p-2 w-full"
-                placeholder="Enter unit"
-              />
-            )}
-          />
-          {errors.unit && <span className="text-red-500">{errors.unit.message}</span>}
-        {/* Unit */}
-          </div>
-        <div>
-          <label className="block text-sm font-medium">Unit Name 2</label>
-          <Controller
-            name="unitName2"
-            control={control}
-            render={({ field }) => (
-              <input
-              {...field}
-              className="border border-gray-300 rounded-md p-2 w-full"
-              placeholder="Enter unit"
-              />
-            )}
-            />
-          {errors.unit && <span className="text-red-500">{errors.unit.message}</span>}
-        </div>
-
-
-          
-        {/* Category */}
-        <div>
-          <label className="block text-sm font-medium">Category</label>
-          <Controller
-            name="category"
-            control={control}
-            render={({ field: { onChange, onBlur, value, ref } }) => (
-              <select
-                onChange={(e) => {
-                  const selectedCategoryId = e.target.value;
-                  const selectedCategory = categories?.find((cat: { _id: string; name: string }) => cat._id === selectedCategoryId);
-
-                  onChange(selectedCategoryId); // Store the category ID
-                  setValue("categoryName", selectedCategory ? selectedCategory.name : ""); // Store the category name
-                }}
-                onBlur={onBlur}
-                ref={ref}
-                value={value}
-                className="border border-gray-300 rounded-md p-2 w-full"
-              >
-                <option value="">Select a category</option>
-                {isLoading ? (
-                  <option value="">Loading categories...</option>
-                ) : (
-                  categories?.map((category: { _id: string; name: string }) => (
-                    <option key={category._id} value={category._id}>
-                      {category.name}
-                    </option>
-                  ))
-                )}
-              </select>
-            )}
-          />
-          {errors.category && <span className="text-red-500">{errors.category.message}</span>}
-        </div>
-
-        {/* Pricing Fields */}
-          {/* Purchase Price */}
+        <div className="grid grid-cols-2 max-sm:grid-cols-1 gap-4">
+          {/* Barcode */}
           <div>
-            <label className="block text-sm font-medium">Purchase Price</label>
+            <label className="block text-sm font-medium">{t('barcode')}</label>
+            <Controller
+              name="barcode"
+              control={control}
+              render={({ field }) => (
+                <input
+                  {...field}
+                  className="border border-gray-300 rounded-md p-2 w-full"
+                  placeholder={t('barcode')}
+                />
+              )}
+            />
+            {errors.barcode && <span className="text-red-500">{errors.barcode.message}</span>}
+          </div>
+
+          {/* Item Name */}
+          <div>
+            <label className="block text-sm font-medium">{t('itemName')}</label>
+            <Controller
+              name="itemName"
+              control={control}
+              render={({ field }) => (
+                <input
+                  {...field}
+                  className="border border-gray-300 rounded-md p-2 w-full"
+                  placeholder={t('itemName')}
+                />
+              )}
+            />
+            {errors.itemName && <span className="text-red-500">{errors.itemName.message}</span>}
+          </div>
+
+          {/* Unit */}
+          <div>
+            <label className="block text-sm font-medium">{t('unit')}</label>
+            <Controller
+              name="unit"
+              control={control}
+              render={({ field }) => (
+                <input
+                  {...field}
+                  className="border border-gray-300 rounded-md p-2 w-full"
+                  placeholder={t('unit')}
+                />
+              )}
+            />
+            {errors.unit && <span className="text-red-500">{errors.unit.message}</span>}
+          </div>
+
+          {/* Unit Name 2 */}
+          <div>
+            <label className="block text-sm font-medium">{t('unitName2')}</label>
+            <Controller
+              name="unitName2"
+              control={control}
+              render={({ field }) => (
+                <input
+                  {...field}
+                  className="border border-gray-300 rounded-md p-2 w-full"
+                  placeholder={t('unitName2')}
+                />
+              )}
+            />
+            {errors.unitName2 && <span className="text-red-500">{errors.unitName2.message}</span>}
+          </div>
+
+          {/* Category */}
+          <div>
+            <label className="block text-sm font-medium">{t('category')}</label>
+            <Controller
+              name="category"
+              control={control}
+              render={({ field: { onChange, onBlur, value, ref } }) => (
+                <select
+                  onChange={(e) => {
+                    const selectedCategoryId = e.target.value;
+                    const selectedCategory = categories?.find((cat: { _id: string; }) => cat._id === selectedCategoryId);
+
+                    onChange(selectedCategoryId); // Store the category ID
+                    setValue("categoryName", selectedCategory ? selectedCategory.name : ""); // Store the category name
+                  }}
+                  onBlur={onBlur}
+                  ref={ref}
+                  value={value}
+                  className="border border-gray-300 rounded-md p-2 w-full"
+                >
+                  <option value="">{t('selectCategory')}</option>
+                  {isLoading ? (
+                    <option value="">{t('loadingCategories')}</option>
+                  ) : (
+                    categories?.map((category: { _id:  string ; name: string | number | bigint | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<React.AwaitedReactNode> | null | undefined; }) => (
+                      <option key={category._id} value={category._id}>
+                        {category.name}
+                      </option>
+                    ))
+                  )}
+                </select>
+              )}
+            />
+            {errors.category && <span className="text-red-500">{errors.category.message}</span>}
+          </div>
+
+          {/* Pricing Fields */}
+          <div>
+            <label className="block text-sm font-medium">{t('purchasePrice')}</label>
             <Controller
               name="purchasePrice"
               control={control}
@@ -233,7 +229,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
                   type="number"
                   {...field}
                   className="border border-gray-300 rounded-md p-2 w-full"
-                  placeholder="Enter purchase price"
+                  placeholder={t('purchasePrice')}
                 />
               )}
             />
@@ -242,7 +238,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
 
           {/* Sale Price */}
           <div>
-            <label className="block text-sm font-medium">Sale Price</label>
+            <label className="block text-sm font-medium">{t('salePrice')}</label>
             <Controller
               name="salePrice"
               control={control}
@@ -251,7 +247,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
                   type="number"
                   {...field}
                   className="border border-gray-300 rounded-md p-2 w-full"
-                  placeholder="Enter sale price"
+                  placeholder={t('salePrice')}
                 />
               )}
             />
@@ -260,7 +256,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
 
           {/* Unit Cost */}
           <div>
-            <label className="block text-sm font-medium">Unit Cost</label>
+            <label className="block text-sm font-medium">{t('unitCost')}</label>
             <Controller
               name="unitCost"
               control={control}
@@ -269,7 +265,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
                   type="number"
                   {...field}
                   className="border border-gray-300 rounded-md p-2 w-full"
-                  placeholder="Enter unit cost"
+                  placeholder={t('unitCost')}
                 />
               )}
             />
@@ -278,7 +274,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
 
           {/* Wholesale1 Price */}
           <div>
-            <label className="block text-sm font-medium">Wholesale 1 Price</label>
+            <label className="block text-sm font-medium">{t('wholesale1')}</label>
             <Controller
               name="wholesale1"
               control={control}
@@ -287,7 +283,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
                   type="number"
                   {...field}
                   className="border border-gray-300 rounded-md p-2 w-full"
-                  placeholder="Enter wholesale 1 price"
+                  placeholder={t('wholesale1')}
                 />
               )}
             />
@@ -296,7 +292,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
 
           {/* Wholesale2 Price */}
           <div>
-            <label className="block text-sm font-medium">Wholesale 2 Price</label>
+            <label className="block text-sm font-medium">{t('wholesale2')}</label>
             <Controller
               name="wholesale2"
               control={control}
@@ -305,7 +301,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
                   type="number"
                   {...field}
                   className="border border-gray-300 rounded-md p-2 w-full"
-                  placeholder="Enter wholesale 2 price"
+                  placeholder={t('wholesale2')}
                 />
               )}
             />
@@ -314,7 +310,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
 
           {/* Exhibit Sale Price */}
           <div>
-            <label className="block text-sm font-medium">Exhibit Sale Price</label>
+            <label className="block text-sm font-medium">{t('exhibitSalePrice')}</label>
             <Controller
               name="exhibitSalePrice"
               control={control}
@@ -323,7 +319,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
                   type="number"
                   {...field}
                   className="border border-gray-300 rounded-md p-2 w-full"
-                  placeholder="Enter exhibit sale price"
+                  placeholder={t('exhibitSalePrice')}
                 />
               )}
             />
@@ -332,7 +328,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
 
           {/* Website Sale Price */}
           <div>
-            <label className="block text-sm font-medium">Website Sale Price</label>
+            <label className="block text-sm font-medium">{t('websiteSalePrice')}</label>
             <Controller
               name="websiteSalePrice"
               control={control}
@@ -341,32 +337,34 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
                   type="number"
                   {...field}
                   className="border border-gray-300 rounded-md p-2 w-full"
-                  placeholder="Enter website sale price"
+                  placeholder={t('websiteSalePrice')}
                 />
               )}
             />
             {errors.websiteSalePrice && <span className="text-red-500">{errors.websiteSalePrice.message}</span>}
           </div>
- {/* Rating */}
- <div>
-          <label className="block text-sm font-medium">Rating</label>
-          <Controller
-            name="rating"
-            control={control}
-            render={({ field }) => (
-              <Rating
-                {...field}
-                value={field.value}
-                onChange={(_, newValue) => field.onChange(newValue)}
-              />
-            )}
-          />
-          {errors.rating && <span className="text-red-500">{errors.rating.message}</span>}
-        </div>
+
+          {/* Rating */}
+          <div>
+            <label className="block text-sm font-medium">{t('rating')}</label>
+            <Controller
+              name="rating"
+              control={control}
+              render={({ field }) => (
+                <input
+                  type="number"
+                  {...field}
+                  className="border border-gray-300 rounded-md p-2 w-full"
+                  placeholder={t('rating')}
+                />
+              )}
+            />
+            {errors.rating && <span className="text-red-500">{errors.rating.message}</span>}
+          </div>
         </div>
           {/* Product Image Upload */}
           <div>
-  <label className="block text-sm font-medium">Product Image</label>
+          <label className="block text-sm font-medium">{t('productImage')}</label>
   <div className="mb-4 relative">
 
   <button
@@ -376,7 +374,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
       e.preventDefault();
       setIsDialogOpen(true);
     }}>
-    {!((productImagePreview)) ? "Upload Image" : "Change Image"} <PencilIcon />
+    {t('changeImage')} <PencilIcon />
   </button>
 </div>
   <Controller
@@ -420,7 +418,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
           type="submit"
           className="w-full bg-blue-600 text-white rounded-md py-2"
         >
-          {product ? "Update Product" : "Add Product"}
+          {product ? t('updateButton') : t('submitButton')}
         </button>
       </form>
     </div>

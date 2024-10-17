@@ -65,7 +65,6 @@ export default function RootLayout({
           {/* ------------------------------------------- */}
           <Box sx={{ minHeight: "calc(100vh - 170px)" }} > 
           <div className="w-full h-full">
-
           {children}
           </div>
           </Box>

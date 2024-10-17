@@ -5,10 +5,13 @@ import { motion } from 'framer-motion';
 import { ProductFormData } from '../forms/AddProduct';
 import Blog from '@/app/(DashboardLayout)/components/dashboard/Blog';
 import { Spin } from 'antd';
+import { useTranslations } from 'next-intl'; // استيراد useTranslation
+
 interface CategoryProps {
   name: string;
   products: ProductFormData[];
 }
+
 interface Permissions {
   wholesale1: boolean;
   wholesale2: boolean;
@@ -16,6 +19,7 @@ interface Permissions {
   websiteSalePrice: boolean;
   salePrice: boolean;
 };
+
 const CategoryTabs = ({
   productsLoading,
   role,
@@ -25,14 +29,16 @@ const CategoryTabs = ({
   products,
   permissions
 }: {
-  productsLoading:boolean;
-  role:string;
+  productsLoading: boolean;
+  role: string;
   products: ProductFormData[];
   selectedCategory: string;
   categories: CategoryProps[];
   setSelectedCategory: (i: string) => void;
-  permissions?:Permissions
+  permissions?: Permissions
 }) => {
+  const  t  = useTranslations(); // استخدام useTranslation
+
   // Handle tab change
   const handleTabChange = (event: React.SyntheticEvent, newValue: string) => {
     setSelectedCategory(newValue);
@@ -48,6 +54,7 @@ const CategoryTabs = ({
 
   // Get the remaining categories for the Select dropdown
   const remainingCategories = categories.slice(4);
+
   return (
     <Box sx={{ width: '100%' }}>
       {/* Tabs for first 4 categories */}
@@ -59,43 +66,34 @@ const CategoryTabs = ({
         aria-label="category tabs"
       >
         <Tab
-        
-            label={
-              <div className='flex gap-5'>
-
-             
-              <p>
-               All
-              </p>
-                </div>
-            }
-            value={""}
-            icon={<IconList size={20} />} // Icon from @tabler/icons-react
-            iconPosition="start"
-          />
+          label={
+            <div className='flex gap-5'>
+              <p>{t('categoryTabs.all')}</p> {/* استخدام النص من ملف اللغة */}
+            </div>
+          }
+          value={""}
+          icon={<IconList size={20} />}
+          iconPosition="start"
+        />
         {firstFourCategories.map((category) => (
           <Tab
             key={category.name}
             label={
               <div className='flex gap-5'>
-
-              <Badge
-                badgeContent={category.products.length} // العدد داخل الدائرة
-                color="primary"
-                overlap="circular"
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'left',
-                }}
+                <Badge
+                  badgeContent={category.products.length}
+                  color="primary"
+                  overlap="circular"
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left',
+                  }}
                 >
-              </Badge>
-              <p>
-                {category.name}
-              </p>
-                </div>
+                </Badge>
+                <p>{category.name}</p>
+              </div>
             }
             value={category.name}
-            // icon={<IconList size={20} />} // Icon from @tabler/icons-react
             iconPosition="start"
           />
         ))}
@@ -104,12 +102,12 @@ const CategoryTabs = ({
       {/* Select dropdown for remaining categories */}
       {remainingCategories.length > 0 && (
         <FormControl fullWidth sx={{ mt: 2 }}>
-          <InputLabel id="category-select-label">More Categories</InputLabel>
+          <InputLabel id="category-select-label">{t('categoryTabs.moreCategories')}</InputLabel>
           <Select
             labelId="category-select-label"
             value={selectedCategory}
             onChange={handleSelectChange}
-            label="More Categories"
+            label={t('categoryTabs.moreCategories')}
           >
             {remainingCategories.map((category) => (
               <MenuItem key={category.name} value={category.name}>
@@ -127,15 +125,19 @@ const CategoryTabs = ({
         exit={{ opacity: 0, x: -50 }}
         transition={{ duration: 0.5 }}
       >
-      {!productsLoading ?   <Box>
-          {products && products.length > 0 ? (
-           <Blog products={products} role={role} permissions={permissions}/>
-          ) : (
-            <Box>No products found for this category.</Box>
-          )}
-        </Box>:<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
-      <Spin size="large" />
-    </div>}
+        {!productsLoading ? (
+          <Box>
+            {products && products.length > 0 ? (
+              <Blog products={products} role={role} permissions={permissions} />
+            ) : (
+              <Box>{t('categoryTabs.noProducts')}</Box> // استخدام النص من ملف اللغة
+            )}
+          </Box>
+        ) : (
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
+            <Spin size="large" />
+          </div>
+        )}
       </motion.div>
     </Box>
   );

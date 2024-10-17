@@ -25,6 +25,7 @@ import {
   FormHelperText,
   FormControlLabel,
 } from '@mui/material';
+import { useTranslations } from 'next-intl';
 import { IconTrash, IconEdit } from '@tabler/icons-react';
 import { motion } from 'framer-motion';
 import { toast } from 'react-toastify';
@@ -54,6 +55,7 @@ const deleteUser = async (userId: string) => {
 };
 
 const UserTable = () => {
+  const t = useTranslations('UserTable');
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
   const [limit, setLimit] = useState(10); // Default limit to 10
@@ -112,13 +114,13 @@ const UserTable = () => {
   return (
     <Container component={motion.div} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <Box sx={{ mt: 4 }}>
-        <h2>User List</h2>
+        <h2>{t('userList')}</h2>
 
         {/* Search input */}
         <div className="w-full flex justify-between">
           <div className="flex ">
             <TextField
-              label="Search Users"
+              label={t('searchUsers')}
               variant="outlined"
               value={searchQuery}
               onChange={handleSearchChange}
@@ -127,12 +129,12 @@ const UserTable = () => {
 
             {/* Limit Selector */}
             <FormControl sx={{ mb: 2, ml: 2 }}>
-              <InputLabel id="limit-select-label">Limit</InputLabel>
+              <InputLabel id="limit-select-label">{t('limit')}</InputLabel>
               <Select
                 labelId="limit-select-label"
                 value={limit}
                 onChange={handleLimitChange}
-                label="Limit"
+                label={t('limit')}
               >
                 <MenuItem value={5}>5</MenuItem>
                 <MenuItem value={10}>10</MenuItem>
@@ -143,31 +145,31 @@ const UserTable = () => {
 
             {/* Role Selector */}
             <FormControl sx={{ mb: 2, ml: 2 }}>
-              <InputLabel id="role-select-label">Role</InputLabel>
+              <InputLabel id="role-select-label">{t('role')}</InputLabel>
               <Select
                 labelId="role-select-label"
                 value={role}
                 className='w-[150px]'
                 onChange={handleRoleChange}
-                label="Role"
+                label={t('role')}
               >
-                <MenuItem value="">All</MenuItem>
-                <MenuItem value="admin">Admin</MenuItem>
-                <MenuItem value="wholesale1">Wholesale 1</MenuItem>
-                <MenuItem value="wholesale2">Wholesale 2</MenuItem>
-                <MenuItem value="retail">Retail</MenuItem>
+                <MenuItem value="">{t('all')}</MenuItem>
+                <MenuItem value="admin">{t('admin')}</MenuItem>
+                <MenuItem value="wholesale1">{t('wholesale1')}</MenuItem>
+                <MenuItem value="wholesale2">{t('wholesale2')}</MenuItem>
+                <MenuItem value="retail">{t('retail')}</MenuItem>
               </Select>
             </FormControl>
           </div>
           <Box sx={{ display: 'flex', justifyContent: 'flex-end', }}>
-            <Tooltip title="Add a new user" arrow>
+            <Tooltip title={t('addUser')} arrow>
               <Link href="/dashboard/utilities/users/add" passHref>
                 <Button
                   variant="contained"
                   color="primary"
                   startIcon={<IconUserPlus />}
                 >
-                  Add User
+                  {t('addUser')}
                 </Button>
               </Link>
             </Tooltip>
@@ -178,10 +180,10 @@ const UserTable = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Role</TableCell>
-              <TableCell>Actions</TableCell>
+              <TableCell>{t('name')}</TableCell>
+              <TableCell>{t('email')}</TableCell>
+              <TableCell>{t('role')}</TableCell>
+              <TableCell>{t('actions')}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -191,12 +193,12 @@ const UserTable = () => {
                 <TableCell>{user.email}</TableCell>
                 <TableCell>{user.role}</TableCell>
                 <TableCell>
-                  <Tooltip title="Edit user" arrow>
+                  <Tooltip title={t('editUser')} arrow>
                     <IconButton onClick={() => handleUpdate(user)} color="primary">
                       <IconEdit />
                     </IconButton>
                   </Tooltip>
-                  <Tooltip title="Delete user" arrow>
+                  <Tooltip title={t('deleteUser')} arrow>
                     <IconButton onClick={() => handleDelete(user._id)} color="secondary">
                       <IconTrash />
                     </IconButton>
@@ -219,11 +221,11 @@ const UserTable = () => {
       {/* Drawer for editing user */}
       <Drawer anchor="bottom" open={drawerOpen} onClose={handleCloseDrawer}>
         <div className='flex justify-center'>
-
-        <UpdateUserForm user={selectedUser} onClose={handleCloseDrawer} refetch={refetch} />
+          <UpdateUserForm user={selectedUser} onClose={handleCloseDrawer} refetch={refetch} />
         </div>
       </Drawer>
     </Container>
+
   );
 };
 
@@ -232,6 +234,7 @@ const UpdateUserForm: React.FC<{ user: any; onClose: () => void; refetch: () => 
   onClose,
   refetch,
 }) => {
+  const t = useTranslations('UpdateUserForm');
   const {
     control,
     handleSubmit,
@@ -285,14 +288,14 @@ const UpdateUserForm: React.FC<{ user: any; onClose: () => void; refetch: () => 
         boxShadow: 3,
       }}
     >
-      <h2>Edit User</h2>
+      <h2>{t('editUser')}</h2>
       <Controller
         name="name"
         control={control}
         render={({ field }) => (
           <TextField
             {...field}
-            label="Name"
+            label={t('name')}
             variant="outlined"
             error={!!errors.name}
             helperText={errors.name ? errors.name.message : ''}
@@ -305,7 +308,7 @@ const UpdateUserForm: React.FC<{ user: any; onClose: () => void; refetch: () => 
         render={({ field }) => (
           <TextField
             {...field}
-            label="Email"
+            label={t('email')}
             variant="outlined"
             error={!!errors.email}
             helperText={errors.email ? errors.email.message : ''}
@@ -318,7 +321,7 @@ const UpdateUserForm: React.FC<{ user: any; onClose: () => void; refetch: () => 
         render={({ field }) => (
           <TextField
             {...field}
-            label="Password"
+            label={t('password')}
             type="password"
             variant="outlined"
             error={!!errors.password}
@@ -331,10 +334,10 @@ const UpdateUserForm: React.FC<{ user: any; onClose: () => void; refetch: () => 
         control={control}
         render={({ field }) => (
           <FormControl variant="outlined">
-            <InputLabel>Role</InputLabel>
-            <Select {...field} label="Role" error={!!errors.role}>
-              <MenuItem value="admin">Admin</MenuItem>
-              <MenuItem value="user">User</MenuItem>
+            <InputLabel>{t('role')}</InputLabel>
+            <Select {...field} label={t('role')} error={!!errors.role}>
+              <MenuItem value="admin">{t('admin')}</MenuItem>
+              <MenuItem value="user">{t('user')}</MenuItem>
             </Select>
             {errors.role && <FormHelperText error>{errors.role.message}</FormHelperText>}
           </FormControl>
@@ -343,7 +346,7 @@ const UpdateUserForm: React.FC<{ user: any; onClose: () => void; refetch: () => 
 
       {/* Permissions Section */}
       <FormGroup>
-        <FormLabel component="legend">Permissions</FormLabel>
+        <FormLabel component="legend">{t('permissions')}</FormLabel>
         <FormControl error={!!errors.permissions}>
           <FormGroup>
             <Controller
@@ -352,7 +355,7 @@ const UpdateUserForm: React.FC<{ user: any; onClose: () => void; refetch: () => 
               render={({ field }) => (
                 <FormControlLabel
                   control={<Checkbox {...field} checked={field.value} />}
-                  label="Wholesale 1"
+                  label={t('wholesale1')}
                 />
               )}
             />
@@ -362,7 +365,7 @@ const UpdateUserForm: React.FC<{ user: any; onClose: () => void; refetch: () => 
               render={({ field }) => (
                 <FormControlLabel
                   control={<Checkbox {...field} checked={field.value} />}
-                  label="Wholesale 2"
+                  label={t('wholesale2')}
                 />
               )}
             />
@@ -372,7 +375,7 @@ const UpdateUserForm: React.FC<{ user: any; onClose: () => void; refetch: () => 
               render={({ field }) => (
                 <FormControlLabel
                   control={<Checkbox {...field} checked={field.value} />}
-                  label="Exhibit Sale Price"
+                  label={t('exhibitSalePrice')}
                 />
               )}
             />
@@ -382,7 +385,7 @@ const UpdateUserForm: React.FC<{ user: any; onClose: () => void; refetch: () => 
               render={({ field }) => (
                 <FormControlLabel
                   control={<Checkbox {...field} checked={field.value} />}
-                  label="Website Sale Price"
+                  label={t('websiteSalePrice')}
                 />
               )}
             />
@@ -392,7 +395,7 @@ const UpdateUserForm: React.FC<{ user: any; onClose: () => void; refetch: () => 
               render={({ field }) => (
                 <FormControlLabel
                   control={<Checkbox {...field} checked={field.value} />}
-                  label="Sale Price"
+                  label={t('salePrice')}
                 />
               )}
             />
@@ -402,13 +405,12 @@ const UpdateUserForm: React.FC<{ user: any; onClose: () => void; refetch: () => 
       </FormGroup>
 
       <Button type="submit" variant="contained" color="primary">
-        Save Changes
+        {t('saveChanges')}
       </Button>
       <Button onClick={onClose} variant="outlined" color="secondary">
-        Cancel
+        {t('cancel')}
       </Button>
-    </Box>
-  );
+    </Box>  );
 };
 
 

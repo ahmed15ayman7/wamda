@@ -22,6 +22,7 @@ import { motion } from 'framer-motion';
 import { toast } from 'react-toastify';
 import { IconBasket } from '@tabler/icons-react';
 import Link from 'next/link'; // Import Link from Next.js
+import { useTranslations } from 'next-intl';
 
 interface Product {
   _id: string;
@@ -48,6 +49,7 @@ const fetchProduct = async (id: string): Promise<Product> => {
 
 const ProductDetailPage = () => {
   const { id } = useParams<{ id: string }>();
+  const t = useTranslations('productDetail'); // استخدام 'productDetail' للحصول على الترجمة
   
   const { data, isLoading, isError } = useQuery({ 
     queryKey: ['product', id],
@@ -67,7 +69,7 @@ const ProductDetailPage = () => {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
         <Typography variant="h6" color="error">
-          Error fetching product details.
+          {t('errorFetching')}
         </Typography>
       </Box>
     );
@@ -95,34 +97,34 @@ const ProductDetailPage = () => {
               {data.itemName}
             </Typography>
             <Typography variant="subtitle1" color="textSecondary">
-              Barcode: {data.barcode}
+              {t('barcode')}: {data.barcode}
             </Typography>
             <Typography variant="body1">
-              Category: {data.categoryName}
+              {t('category')}: {data.categoryName}
             </Typography>
             <Typography variant="body1">
-              Unit: {data.unit} ({data.unitName2})
+              {t('unit')}: {data.unit} ({data.unitName2})
             </Typography>
             <Typography variant="body1">
-              Purchase Price: ${data.purchasePrice}
+              {t('purchasePrice')}: ${data.purchasePrice}
             </Typography>
             <Typography variant="body1">
-              Sale Price: <strong>${data.salePrice}</strong>
+              {t('salePrice')}: <strong>${data.salePrice}</strong>
             </Typography>
             <Typography variant="body1">
-              Unit Cost: ${data.unitCost}
+              {t('unitCost')}: ${data.unitCost}
             </Typography>
             <Typography variant="body1">
-              Wholesale 1 Price: ${data.wholesale1}
+              {t('wholesale1')}: ${data.wholesale1}
             </Typography>
             <Typography variant="body1">
-              Wholesale 2 Price: ${data.wholesale2}
+              {t('wholesale2')}: ${data.wholesale2}
             </Typography>
             <Typography variant="body1">
-              Exhibit Sale Price: ${data.exhibitSalePrice}
+              {t('exhibitSalePrice')}: ${data.exhibitSalePrice}
             </Typography>
             <Typography variant="body1">
-              Website Sale Price: ${data.websiteSalePrice}
+              {t('websiteSalePrice')}: ${data.websiteSalePrice}
             </Typography>
             
             {/* Product Rating */}
@@ -138,7 +140,7 @@ const ProductDetailPage = () => {
               href={`/dashboard/utilities/products/edit/${data._id}`} // Link to edit page
               startIcon={<IconBasket />}
             >
-              Edit Product
+              {t('editProduct')}
             </Button>
           </Stack>
         </Grid>

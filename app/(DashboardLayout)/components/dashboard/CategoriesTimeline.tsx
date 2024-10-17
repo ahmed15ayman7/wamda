@@ -10,9 +10,12 @@ import {
   timelineOppositeContentClasses,
 } from '@mui/lab';
 import { Typography, Link } from '@mui/material';
+import { useTranslations } from 'next-intl';
 
 // تحديث توقيع المكون
-const CategoriesTimeline = ({ categories }: { categories: { _id:string,name: string; description: string; products: any[] }[] }) => {
+const CategoriesTimeline = ({ categories }: { categories: { _id: string; name: string; description: string; products: any[] }[] }) => {
+  const t = useTranslations('categoriesTimeline'); // استخدم 'categoriesTimeline' كمفتاح الترجمة
+
   // إعداد الألوان والروابط للفئات
   const categoryDetails = categories.map(category => ({
     ...category,
@@ -21,7 +24,7 @@ const CategoriesTimeline = ({ categories }: { categories: { _id:string,name: str
   }));
 
   return (
-    <DashboardCard title="Categories Overview">
+    <DashboardCard title={t('title')}>
       <Timeline
         className="theme-timeline"
         sx={{
@@ -39,7 +42,9 @@ const CategoriesTimeline = ({ categories }: { categories: { _id:string,name: str
       >
         {categoryDetails.map((category, index) => (
           <TimelineItem key={index}>
-            <TimelineOppositeContent>{category.products.length} product</TimelineOppositeContent>
+            <TimelineOppositeContent>
+              {t('product_count', { count: category.products.length })}
+            </TimelineOppositeContent>
             <TimelineSeparator>
               <TimelineDot color={category.color as ("primary" | "secondary" | "success" | "warning" | "error" | "inherit" | "grey" | "info")} variant="outlined" />
               {index < categoryDetails.length - 1 && <TimelineConnector />}
@@ -49,7 +54,7 @@ const CategoriesTimeline = ({ categories }: { categories: { _id:string,name: str
                 <Link href={category.link} underline="none">
                   {category.name}
                 </Link>
-              </Typography>: {category.description}
+              </Typography>: {t('description')}: {category.description}
             </TimelineContent>
           </TimelineItem>
         ))}

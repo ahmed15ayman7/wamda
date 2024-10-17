@@ -18,6 +18,7 @@ import {
 import { IconPlus } from '@tabler/icons-react';
 import { motion } from 'framer-motion';
 import { toast } from 'react-toastify';
+import { useTranslations } from 'next-intl';
 
 interface CategoryFormData {
   name: string;
@@ -32,6 +33,7 @@ interface CategoryFormProps {
 
 const CategoryForm: React.FC<CategoryFormProps> = ({ categoryData, onSuccess }) => {
   const router = useRouter();
+  const t = useTranslations('categoryForm'); // استخدام الترجمة
   const { register, handleSubmit, control, formState: { errors }, reset } = useForm<CategoryFormData>({
     resolver: zodResolver(categorySchema),
     defaultValues: categoryData || {}, // استخدام البيانات الافتراضية من الفئة المحددة
@@ -58,15 +60,15 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ categoryData, onSuccess }) 
       if (categoryData) {
         // تحديث الفئة إذا كانت البيانات موجودة
         await axios.put(`/api/categories/${categoryData._id}`, data);
-        toast.success('Category updated successfully!');
+        toast.success(t('categoryUpdated')); // استخدام الترجمة
       } else {
         // إضافة فئة جديدة إذا لم تكن البيانات موجودة
         await axios.post('/api/categories', data);
-        toast.success('Category created successfully!');
+        toast.success(t('categoryCreated')); // استخدام الترجمة
       }
       if (onSuccess) onSuccess(); // استدعاء دالة النجاح
     } catch (error) {
-      toast.error('Error saving category');
+      toast.error(t('errorSaving')); // استخدام الترجمة
       console.error(error);
     } finally {
       setisSubmitting(false);
@@ -85,7 +87,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ categoryData, onSuccess }) 
         {/* Category Name */}
         <FormControl fullWidth>
           <TextField
-            label="Category Name"
+            label={t('categoryName')} // استخدام الترجمة
             {...register('name')}
             error={!!errors.name}
             helperText={errors.name ? errors.name.message : ''}
@@ -95,7 +97,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ categoryData, onSuccess }) 
         {/* Description */}
         <FormControl fullWidth>
           <TextField
-            label="Description"
+            label={t('description')} // استخدام الترجمة
             multiline
             rows={4}
             {...register('description')}
@@ -106,7 +108,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ categoryData, onSuccess }) 
 
         {/* Products */}
         <FormControl fullWidth>
-          <InputLabel>Products</InputLabel>
+          <InputLabel>{t('products')}</InputLabel> {/* استخدام الترجمة */}
           <Controller
             name="products"
             control={control}
@@ -136,7 +138,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ categoryData, onSuccess }) 
           fullWidth
           disabled={isSubmitting}
         >
-          {isSubmitting ? <CircularProgress size={24} /> : categoryData ? 'Update Category' : 'Add Category'}
+          {isSubmitting ? <CircularProgress size={24} /> : categoryData ? t('updateCategory') : t('addCategory')} {/* استخدام الترجمة */}
         </Button>
       </form>
     </motion.div>

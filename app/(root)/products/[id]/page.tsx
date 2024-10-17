@@ -19,9 +19,9 @@ import {
   Box,
 } from '@mui/material';
 import { motion } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 
 import { getUserData } from '@/lib/actions/user.action';
-
 
 interface Product {
   _id: string;
@@ -42,7 +42,7 @@ interface Product {
   rating: number;
 }
 
-// دالة لجلب المنتج من الـ API
+// Fetch product from API
 const fetchProduct = async (id: string): Promise<Product> => {
   const { data } = await axios.get(`/api/datas/${id}`);
   return data;
@@ -50,8 +50,9 @@ const fetchProduct = async (id: string): Promise<Product> => {
 
 const ProductDetailPage = () => {
   const { id } = useParams<{ id: string }>();
+  const t = useTranslations('productDetail2');
 
-  const { data: userData,isLoading:isLoadding } = useQuery({queryKey:['userData'],queryFn:()=> getUserData()});
+  const { data: userData, isLoading: isLoadding } = useQuery({ queryKey: ['userData'], queryFn: () => getUserData() });
   const { data, isLoading, isError } = useQuery({
     queryKey: ['data', id],
     queryFn: () => fetchProduct(id),
@@ -70,18 +71,16 @@ const ProductDetailPage = () => {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
         <Typography variant="h6" color="error">
-          Error fetching data details.
+          {t('errorFetching')}
         </Typography>
       </Box>
     );
   }
 
-
-
   return (
     <Container component={motion.div} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <Grid container spacing={4} mt={0}>
-        {/* صورة المنتج */}
+        {/* Product Image */}
         <Grid item xs={12} md={6}>
           <Card>
             <CardMedia
@@ -93,53 +92,50 @@ const ProductDetailPage = () => {
           </Card>
         </Grid>
 
-        {/* تفاصيل المنتج */}
+        {/* Product Details */}
         <Grid item xs={12} md={6}>
           <Stack spacing={2}>
             <Typography variant="h4" component="h1">
               {data.itemName}
             </Typography>
-            {/* <Typography variant="subtitle1" color="textSecondary">
-              Barcode: {data.barcode}
-            </Typography> */}
             <Typography variant="body1">
-              Category: {data.categoryName}
+              {t('category')}: {data.categoryName}
             </Typography>
             <Typography variant="body1">
-              Unit: {data.unit} ({data.unitName2})
+              {t('unit')}: {data.unit} ({data.unitName2})
             </Typography>
 
-          { !isLoadding && userData.permissions && (
+            {!isLoadding && userData.permissions && (
+              <>
+                {userData.permissions.salePrice && (
+                  <Tooltip title={`${t('salePrice')}: $${data.salePrice}`} arrow>
+                    <Typography variant="body2" color="textSecondary">{t('salePrice')}: ${data.salePrice}</Typography>
+                  </Tooltip>
+                )}
+                {userData.permissions.wholesale1 && (
+                  <Tooltip title={`${t('wholesale1')}: $${data.wholesale1}`} arrow>
+                    <Typography variant="body2" color="textSecondary">{t('wholesale1')}: ${data.wholesale1}</Typography>
+                  </Tooltip>
+                )}
+                {userData.permissions.wholesale2 && (
+                  <Tooltip title={`${t('wholesale2')}: $${data.wholesale2}`} arrow>
+                    <Typography variant="body2" color="textSecondary">{t('wholesale2')}: ${data.wholesale2}</Typography>
+                  </Tooltip>
+                )}
+                {userData.permissions.exhibitSalePrice && (
+                  <Tooltip title={`${t('exhibitSalePrice')}: $${data.exhibitSalePrice}`} arrow>
+                    <Typography variant="body2" color="textSecondary">{t('exhibitSalePrice')}: ${data.exhibitSalePrice}</Typography>
+                  </Tooltip>
+                )}
+                {userData.permissions.websiteSalePrice && (
+                  <Tooltip title={`${t('websiteSalePrice')}: $${data.websiteSalePrice}`} arrow>
+                    <Typography variant="body2" color="textSecondary">{t('websiteSalePrice')}: ${data.websiteSalePrice}</Typography>
+                  </Tooltip>
+                )}
+              </>
+            )}
 
-                  <>
-                    {userData.permissions.salePrice && (
-                      <Tooltip title={`Sale Price: $${data.salePrice}`} arrow>
-                        <Typography variant="body2" color="textSecondary">Sale Price: ${data.salePrice}</Typography>
-                      </Tooltip>
-                    )}
-                    {userData.permissions.wholesale1 && (
-                      <Tooltip title={`Wholesale Price 1: $${data.wholesale1}`} arrow>
-                        <Typography variant="body2" color="textSecondary">Wholesale 1: ${data.wholesale1}</Typography>
-                      </Tooltip>
-                    )}
-                    {userData.permissions.wholesale2 && (
-                      <Tooltip title={`Wholesale Price 2: $${data.wholesale2}`} arrow>
-                        <Typography variant="body2" color="textSecondary">Wholesale 2: ${data.wholesale2}</Typography>
-                      </Tooltip>
-                    )}
-                    {userData.permissions.exhibitSalePrice && (
-                      <Tooltip title={`Exhibit Sale Price: $${data.exhibitSalePrice}`} arrow>
-                        <Typography variant="body2" color="textSecondary">Exhibit Sale Price: ${data.exhibitSalePrice}</Typography>
-                      </Tooltip>
-                    )}
-                    {userData.permissions.websiteSalePrice && (
-                      <Tooltip title={`Website Sale Price: $${data.websiteSalePrice}`} arrow>
-                        <Typography variant="body2" color="textSecondary">Website Sale Price: ${data.websiteSalePrice}</Typography>
-                      </Tooltip>
-                    )}
-                  </>)}
-
-            <Tooltip title={`Rating: ${data.rating} stars`} arrow>
+            <Tooltip title={`${t('rating')}: ${data.rating} stars`} arrow>
               <Rating value={data.rating} readOnly />
             </Tooltip>
           </Stack>

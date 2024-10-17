@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 // mui imports
 import { ListSubheader, styled, Theme } from '@mui/material';
+import { useTranslations } from 'next-intl';
 
 type NavGroup = {
   navlabel?: boolean;
@@ -12,6 +13,7 @@ interface ItemType {
 }
 
 const NavGroup = ({ item }: ItemType) => {
+  const  t  = useTranslations("Sidebar");
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const ListSubheaderStyle = styled((props: Theme | any) => <ListSubheader disableSticky {...props} />)(
     ({ theme }) => ({
@@ -25,7 +27,7 @@ const NavGroup = ({ item }: ItemType) => {
     }),
   );
   return (
-    <ListSubheaderStyle>{item.subheader}</ListSubheaderStyle>
+    <ListSubheaderStyle>{t(item.subheader)}</ListSubheaderStyle>
   );
 };
 

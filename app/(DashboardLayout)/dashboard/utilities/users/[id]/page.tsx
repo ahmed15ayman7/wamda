@@ -11,10 +11,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import { motion } from 'framer-motion';
 import { getUserById, updateUser } from '@/lib/actions/user.action'; // استيراد دالة تعديل اليوزر وجلب اليوزر
 import { useRouter, useParams } from 'next/navigation'; // لاستعمال بيانات الرابط
+import { useTranslations } from 'next-intl'; // استيراد useTranslations
 
 const EditUserPage = ({params}:{params:{id:string}}) => {
   const { id } = params 
   const router = useRouter(); 
+  const t = useTranslations("EditUserPage"); // استخدام useTranslations
 
   const {
     control,
@@ -26,36 +28,35 @@ const EditUserPage = ({params}:{params:{id:string}}) => {
   });
 
   useEffect(() => {
-    // جلب بيانات المستخدم الحالي عند تحميل الصفحة
     const fetchUser = async () => {
       try {
         const userData = await getUserById(id as string); // جلب بيانات المستخدم باستخدام ID
         if (userData) {
           reset(userData); // تعبئة النموذج ببيانات المستخدم
         } else {
-          toast.error('User not found.');
+          toast.error(t('userNotFound'));
           // router.push('/users'); // إعادة التوجيه إذا لم يتم العثور على المستخدم
         }
       } catch (error) {
-        toast.error('An error occurred while fetching user data.');
+        toast.error(t('fetchError'));
       }
     };
 
     fetchUser();
-  }, [id, reset, router]);
+  }, [id, reset, router, t]);
 
   const onSubmit = async (data: UserFormData) => {
     try {
       const result = await updateUser(id as string, data); // تعديل بيانات المستخدم
   
       if (result?.success) {
-        toast.success(result.message); // عرض رسالة النجاح
+        toast.success(t('updateSuccess')); // عرض رسالة النجاح
         router.push('/users'); // إعادة التوجيه بعد النجاح
       } else {
-        toast.error(result?.message || 'Failed to update user.'); // عرض رسالة الخطأ
+        toast.error(result?.message || t('updateError')); // عرض رسالة الخطأ
       }
     } catch (error) {
-      toast.error('An error occurred while updating user.');
+      toast.error(t('updateError'));
     }
   };
 
@@ -75,16 +76,16 @@ const EditUserPage = ({params}:{params:{id:string}}) => {
           boxShadow: 3,
         }}
       >
-        <h2>Edit User</h2>
+        <h2>{t('editUser')}</h2>
 
-        <Tooltip title="Edit the user's full name" arrow>
+        <Tooltip title={t('nameTooltip')} arrow>
           <Controller
             name="name"
             control={control}
             render={({ field }) => (
               <TextField
                 {...field}
-                label="Name"
+                label={t('name')}
                 error={!!errors.name}
                 helperText={errors.name?.message}
                 variant="outlined"
@@ -94,14 +95,14 @@ const EditUserPage = ({params}:{params:{id:string}}) => {
           />
         </Tooltip>
 
-        <Tooltip title="Edit the user's email address" arrow>
+        <Tooltip title={t('emailTooltip')} arrow>
           <Controller
             name="email"
             control={control}
             render={({ field }) => (
               <TextField
                 {...field}
-                label="Email"
+                label={t('email')}
                 error={!!errors.email}
                 helperText={errors.email?.message}
                 variant="outlined"
@@ -111,14 +112,14 @@ const EditUserPage = ({params}:{params:{id:string}}) => {
           />
         </Tooltip>
 
-        <Tooltip title="Edit the user's password" arrow>
+        <Tooltip title={t('passwordTooltip')} arrow>
           <Controller
             name="password"
             control={control}
             render={({ field }) => (
               <TextField
                 {...field}
-                label="Password"
+                label={t('password')}
                 type="password"
                 error={!!errors.password}
                 helperText={errors.password?.message}
@@ -129,14 +130,14 @@ const EditUserPage = ({params}:{params:{id:string}}) => {
           />
         </Tooltip>
 
-        <Tooltip title="Select the user's role" arrow>
+        <Tooltip title={t('roleTooltip')} arrow>
           <Controller
             name="role"
             control={control}
             render={({ field }) => (
               <TextField
                 {...field}
-                label="Role"
+                label={t('role')}
                 select
                 error={!!errors.role}
                 helperText={errors.role?.message}
@@ -152,7 +153,7 @@ const EditUserPage = ({params}:{params:{id:string}}) => {
           />
         </Tooltip>
 
-        <Tooltip title="Click to update the user" arrow>
+        <Tooltip title={t('updateUser')} arrow>
           <Button
             type="submit"
             variant="contained"
@@ -160,7 +161,7 @@ const EditUserPage = ({params}:{params:{id:string}}) => {
             startIcon={<IconUserPlus />}
             sx={{ mt: 2 }}
           >
-            Update User
+            {t('updateUser')}
           </Button>
         </Tooltip>
 

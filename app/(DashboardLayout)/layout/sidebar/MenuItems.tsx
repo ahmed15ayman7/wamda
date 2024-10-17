@@ -1,17 +1,13 @@
 import {
-  // IconAperture,
-  // IconCopy,
-  // IconMapPin,
+
   IconLayoutDashboard,
   IconLogin,
-  // IconMoodHappy,
-  // IconTypography,
+
   IconUserPlus,
   IconUsers,
   IconReceipt2,
   IconCategoryPlus,
-  // IconStethoscope,
-  // IconPill,
+
 } from "@tabler/icons-react";
 
 import { uniqueId } from "lodash";
@@ -26,6 +22,7 @@ const Menuitems = [
     id: uniqueId(),
     title: "Dashboard",
     icon: IconLayoutDashboard,
+    title2:"dashboard",
     href: "/dashboard",
   },
   {
@@ -35,23 +32,26 @@ const Menuitems = [
   {
     id: uniqueId(),
     title: "Users",
+    title2:"users",
     icon: IconUsers,
     href: "/dashboard/utilities/users",
   },
-
+  
   {
     id: uniqueId(),
     title: "Products",
+    title2:"products",
     icon: IconReceipt2, // You can choose any icon
     href: "/dashboard/utilities/products",
   },
   {
     id: uniqueId(),
     title: "Categories",
+    title2:"categories",
     icon: IconCategoryPlus, // You can choose any icon
     href: "/dashboard/utilities/categories",
   },
-
+  
   {
     navlabel: true,
     subheader: "Auth",
@@ -59,34 +59,17 @@ const Menuitems = [
   {
     id: uniqueId(),
     title: "Login",
+    title2:"login",
     icon: IconLogin,
     href: "/authentication/login",
   },
   {
     id: uniqueId(),
     title: "Register Users",
+    title2:"registerUsers",
     icon: IconUserPlus,
     href: "/dashboard/utilities/users/add",
   },
-  // {
-  //   navlabel: true,
-  //   subheader: "Extra",
-  // },
-  // {
-  //   id: uniqueId(),
-  //   title: "Icons",
-  //   icon: IconMoodHappy,
-  //   href: "/icons",
-  // },
-  // {
-  //   id: uniqueId(),
-  //   title: "Sample Page",
-  //   icon: IconAperture,
-  //   href: "/sample-page",
-  // },
-
-  // Added "Users" item
-
 ];
 
 export default Menuitems;

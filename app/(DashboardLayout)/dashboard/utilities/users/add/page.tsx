@@ -10,8 +10,10 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { motion } from 'framer-motion';
 import { addUser } from '@/lib/actions/user.action';
+import { useTranslations } from 'next-intl'; // استخدام next-intl لدعم الترجمة
 
 const AddUserPage: React.FC = () => {
+  const  t  = useTranslations(); // استدعاء دالة الترجمة
   const {
     control,
     handleSubmit,
@@ -25,8 +27,8 @@ const AddUserPage: React.FC = () => {
     wholesale1: false,
     wholesale2: false,
     exhibitSalePrice: false,
-    websiteSalePrice: false,  // إضافة Website Sale Price
-    salePrice: false,         // إضافة Sale Price
+    websiteSalePrice: false,
+    salePrice: false,
   });
 
   const handlePermissionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,11 +48,11 @@ const AddUserPage: React.FC = () => {
       const result = await addUser(finalData);
 
       if (result?.success) {
-        toast.success(result.message); // عرض رسالة النجاح
-        reset(); // إعادة تعيين النموذج بعد الإرسال
-        setPermissions({ wholesale1: false, wholesale2: false, exhibitSalePrice: false, websiteSalePrice: false, salePrice: false }); // إعادة تعيين الصلاحيات
+        toast.success(result.message);
+        reset();
+        setPermissions({ wholesale1: false, wholesale2: false, exhibitSalePrice: false, websiteSalePrice: false, salePrice: false });
       } else {
-        toast.error(result?.message || 'Failed to add user.'); // عرض رسالة الخطأ
+        toast.error(result?.message || 'Failed to add user.');
       }
     } catch (error) {
       toast.error('An error occurred while adding user.');
@@ -73,16 +75,16 @@ const AddUserPage: React.FC = () => {
           boxShadow: 3,
         }}
       >
-        <h2>Add New User</h2>
+        <h2>{t('addUser')}</h2>
 
-        <Tooltip title="Enter the user's full name" arrow>
+        <Tooltip title={t('nameTooltip')} arrow>
           <Controller
             name="name"
             control={control}
             render={({ field }) => (
               <TextField
                 {...field}
-                label="Name"
+                label={t('name')}
                 error={!!errors.name}
                 helperText={errors.name?.message}
                 variant="outlined"
@@ -92,14 +94,14 @@ const AddUserPage: React.FC = () => {
           />
         </Tooltip>
 
-        <Tooltip title="Enter a valid email address" arrow>
+        <Tooltip title={t('emailTooltip')} arrow>
           <Controller
             name="email"
             control={control}
             render={({ field }) => (
               <TextField
                 {...field}
-                label="Email"
+                label={t('email')}
                 error={!!errors.email}
                 helperText={errors.email?.message}
                 variant="outlined"
@@ -109,14 +111,14 @@ const AddUserPage: React.FC = () => {
           />
         </Tooltip>
 
-        <Tooltip title="Enter a strong password" arrow>
+        <Tooltip title={t('passwordTooltip')} arrow>
           <Controller
             name="password"
             control={control}
             render={({ field }) => (
               <TextField
                 {...field}
-                label="Password"
+                label={t('password')}
                 type="password"
                 error={!!errors.password}
                 helperText={errors.password?.message}
@@ -127,28 +129,28 @@ const AddUserPage: React.FC = () => {
           />
         </Tooltip>
 
-        <Tooltip title="Select the user's role" arrow>
+        <Tooltip title={t('roleTooltip')} arrow>
           <Controller
             name="role"
             control={control}
             render={({ field }) => (
               <TextField
                 {...field}
-                label="Role"
+                label={t('role')}
                 select
                 error={!!errors.role}
                 helperText={errors.role?.message}
                 variant="outlined"
                 fullWidth
               >
-                <MenuItem value="admin">Admin (ادمن)</MenuItem>
-                <MenuItem value="user">User (مستخدم)</MenuItem>
+                <MenuItem value="admin">{t('admin')}</MenuItem>
+                <MenuItem value="user">{t('user')}</MenuItem>
               </TextField>
             )}
           />
         </Tooltip>
 
-        <Tooltip title="Assign user permissions" arrow>
+        <Tooltip title={t('permissions')} arrow>
           <FormGroup>
             <FormControlLabel
               control={
@@ -158,7 +160,7 @@ const AddUserPage: React.FC = () => {
                   name="wholesale1"
                 />
               }
-              label="Wholesale 1 (جملة ١)"
+              label={t('wholesale1')}
             />
             <FormControlLabel
               control={
@@ -168,7 +170,7 @@ const AddUserPage: React.FC = () => {
                   name="wholesale2"
                 />
               }
-              label="Wholesale 2 (جملة ٢)"
+              label={t('wholesale2')}
             />
             <FormControlLabel
               control={
@@ -178,7 +180,7 @@ const AddUserPage: React.FC = () => {
                   name="exhibitSalePrice"
                 />
               }
-              label="Exhibit Sale Price (سعر العرض)"
+              label={t('exhibitSalePrice')}
             />
             <FormControlLabel
               control={
@@ -188,7 +190,7 @@ const AddUserPage: React.FC = () => {
                   name="websiteSalePrice"
                 />
               }
-              label="Website Sale Price (سعر البيع على الموقع)"
+              label={t('websiteSalePrice')}
             />
             <FormControlLabel
               control={
@@ -198,12 +200,12 @@ const AddUserPage: React.FC = () => {
                   name="salePrice"
                 />
               }
-              label="Sale Price (سعر البيع)"
+              label={t('salePrice')}
             />
           </FormGroup>
         </Tooltip>
 
-        <Tooltip title="Click to add the user" arrow>
+        <Tooltip title={t('addUserButton')} arrow>
           <Button
             type="submit"
             variant="contained"
@@ -211,7 +213,7 @@ const AddUserPage: React.FC = () => {
             startIcon={<IconUserPlus />}
             sx={{ mt: 2 }}
           >
-            Add User
+            {t('addUserButton')}
           </Button>
         </Tooltip>
 

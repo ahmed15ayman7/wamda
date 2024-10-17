@@ -25,54 +25,55 @@ import Link from 'next/link';
 import axios from 'axios';
 import CategoryForm from '@/components/forms/CategoryForm';
 import { Spin } from 'antd';
+import { useTranslations } from 'next-intl'; // Make sure to import this
 
 const CategoriesPage = () => {
+  const t = useTranslations('CategoriesPage'); // Get translation function for this page
   const { data, error, isLoading, refetch } = useCategories();
-  const [openEditDialog, setOpenEditDialog] = useState(false); // إدارة الـ Dialog
-  const [selectedCategory, setSelectedCategory] = useState<any>(null); // الفئة المختارة للتحرير
+  const [openEditDialog, setOpenEditDialog] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<any>(null);
 
   // Handle delete action
   const handleDelete = async (id: string) => {
     try {
       await axios.delete(`/api/categories/${id}`);
-      toast.success('Category deleted successfully');
+      toast.success(t('deleteSuccess')); // Use translation for success message
       refetch(); // Refresh categories after deletion
     } catch (error) {
-      toast.error('Failed to delete category');
+      toast.error(t('deleteFailure')); // Use translation for error message
     }
   };
 
   const handleEdit = (category: any) => {
-    setSelectedCategory(category); // ضبط الفئة المختارة
-    setOpenEditDialog(true); // فتح الـ Dialog
+    setSelectedCategory(category);
+    setOpenEditDialog(true);
   };
 
   const handleCloseEditDialog = () => {
-    setOpenEditDialog(false); // إغلاق الـ Dialog
-    setSelectedCategory(null); // إعادة تعيين الفئة المختارة
+    setOpenEditDialog(false);
+    setSelectedCategory(null);
   };
 
   if (isLoading) {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-      <Spin size="large" />
-    </div>
+        <Spin size="large" />
+      </div>
     );
   }
 
   if (error) {
-    return <Typography color="error">Error loading categories</Typography>;
+    return <Typography color="error">{t('errorLoading')}</Typography>; // Use translation for error message
   }
 
   return (
     <Box p={4}>
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Typography variant="h4" gutterBottom>
-          Categories
+          {t('categories')} {/* Use translation for the title */}
         </Typography>
 
-        {/* Add Category Button */}
-        <Tooltip title="Add New Category" arrow>
+        <Tooltip title={t('addCategory')} arrow>
           <Link href="/dashboard/utilities/categories/add" passHref>
             <Button
               variant="contained"
@@ -81,7 +82,7 @@ const CategoriesPage = () => {
               component={motion.div}
               whileHover={{ scale: 1.1 }}
             >
-              Add Category
+              {t('addCategory')} {/* Use translation for the button */}
             </Button>
           </Link>
         </Tooltip>
@@ -97,27 +98,24 @@ const CategoriesPage = () => {
                   <Typography color="textSecondary">{category.description}</Typography>
 
                   <Box mt={2} display="flex" justifyContent="space-between" alignItems="center">
-                    {/* View Button with next/link */}
-                    <Tooltip title="View Category" arrow>
+                    <Tooltip title={t('viewCategory')} arrow>
                       <Link href={`/dashboard/utilities/categories/${category._id}`} passHref>
                         <Button
                           variant="outlined"
                           startIcon={<IconEye />}
                         >
-                          View
+                          {t('viewCategory')} {/* Use translation for the button */}
                         </Button>
                       </Link>
                     </Tooltip>
 
-                    {/* Edit Icon with Tooltip */}
-                    <Tooltip title="Edit Category" arrow>
+                    <Tooltip title={t('editCategory')} arrow>
                       <IconButton onClick={() => handleEdit(category)}>
                         <IconEdit />
                       </IconButton>
                     </Tooltip>
 
-                    {/* Delete Icon with Tooltip */}
-                    <Tooltip title="Delete Category" arrow>
+                    <Tooltip title={t('deleteCategory')} arrow>
                       <IconButton onClick={() => handleDelete(category._id)}>
                         <IconTrash />
                       </IconButton>
@@ -132,21 +130,21 @@ const CategoriesPage = () => {
 
       {/* Edit Category Dialog */}
       <Dialog open={openEditDialog} onClose={handleCloseEditDialog} fullWidth maxWidth="sm">
-        <DialogTitle>Edit Category</DialogTitle>
+        <DialogTitle>{t('editCategory')}</DialogTitle> {/* Use translation for the dialog title */}
         <DialogContent>
           {selectedCategory && (
             <CategoryForm
               categoryData={selectedCategory} 
               onSuccess={() => {
                 refetch(); 
-                handleCloseEditDialog(); // إغلاق الـ Dialog بعد النجاح
+                handleCloseEditDialog();
               }}
             />
           )}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseEditDialog} color="secondary">
-            Cancel
+            {t('cancel')} {/* Add a translation for cancel if necessary */}
           </Button>
         </DialogActions>
       </Dialog>

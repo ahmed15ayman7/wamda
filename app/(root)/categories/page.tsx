@@ -8,10 +8,11 @@ import { motion } from 'framer-motion';
 
 import 'react-toastify/dist/ReactToastify.css';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 const CategoriesPage = () => {
   const { data, error, isLoading, refetch } = useCategories();
-
+  const t = useTranslations('CategoriesPage');
   if (isLoading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
@@ -28,7 +29,7 @@ const CategoriesPage = () => {
     <Box p={4}>
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Typography variant="h4" gutterBottom>
-          Categories
+         {t("categories")}
         </Typography>
       </Box>
 
@@ -54,7 +55,7 @@ const CategoriesPage = () => {
                           variant="outlined"
                           startIcon={<IconEye />}
                         >
-                          View
+                          {t('viewCategory')}
                         </Button>
                       </Link>
                     </Tooltip>

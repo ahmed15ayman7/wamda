@@ -10,6 +10,7 @@ import {
   ListItemButton,
 } from "@mui/material";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 type NavGroup = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -18,6 +19,7 @@ type NavGroup = {
   navlabel?: boolean;
   subheader?: string;
   title?: string;
+  title2?: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   icon?: any;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -39,7 +41,7 @@ const NavItem = ({ item, level, pathDirect, onClick }: ItemType) => {
   const Icon = item.icon;
   const theme = useTheme();
   const itemIcon = <Icon stroke={1.5} size="1.3rem" />;
-
+  const  t  = useTranslations("Sidebar");
   const ListItemStyled = styled(ListItem)(() => ({
     padding: 0,
     ".MuiButtonBase-root": {
@@ -86,7 +88,7 @@ const NavItem = ({ item, level, pathDirect, onClick }: ItemType) => {
             {itemIcon}
           </ListItemIcon>
           <ListItemText>
-            <>{item.title}</>
+            <>{t(item.title2)}</>
           </ListItemText>
         </ListItemButton>
       </ListItemStyled>

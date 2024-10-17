@@ -6,14 +6,12 @@ import { useParams } from 'next/navigation';
 import {
   Box,
   Typography,
-  CircularProgress,
-  Card,
-  CardContent,
   Grid,
 } from '@mui/material';
 import Blog from '@/app/(DashboardLayout)/components/dashboard/Blog';
 import { Spin } from 'antd';
 import { getUserData } from '@/lib/actions/user.action';
+import { useTranslations } from 'next-intl';
 
 const fetchCategory = async (id: string) => {
   const { data } = await axios.get(`/api/categories/${id}`);
@@ -23,7 +21,7 @@ const fetchCategory = async (id: string) => {
 const CategoryDetailsPage = () => {
   const params = useParams(); // الحصول على المعرف من الـ URL
   const { id } = params;
-
+  const t = useTranslations('categoryDetails');
   const { data: category, error, isLoading } = useQuery( { queryKey:['category', id],queryFn: () => fetchCategory(id as string),
     enabled: !!id,
   });
@@ -48,10 +46,10 @@ const CategoryDetailsPage = () => {
         {category.name}
       </Typography>
       <Typography variant="subtitle1" gutterBottom sx={{ fontStyle: 'italic', color: 'gray' }}>
-        {category.description || 'No description available'}
+        {category.description || t('noDescription')}
       </Typography>
       <Typography variant="h6" gutterBottom>
-        Products:
+        {t("products")}:
       </Typography>
 
       <Grid container spacing={3}>
@@ -59,7 +57,7 @@ const CategoryDetailsPage = () => {
           <Blog products={category.products} role={'user'} permissions={userData?userData.permissions:undefined} />
           )
         : (
-          <Typography variant="body1">No products associated with this category.</Typography>
+          <Typography variant="body1">{t("noProducts")}</Typography>
         )}
       </Grid>
     </Box>

@@ -1,7 +1,6 @@
 import React, { ReactNode } from 'react';
 import { IntlProvider } from 'next-intl';
-import { useQuery } from '@tanstack/react-query';
-import { getLocal } from '@/hooks/locale';
+import useStore from '@/hooks/zustand';
 const messages = {
     en: require('@/messages/en.json'),
     ar: require('@/messages/ar.json'),
@@ -10,10 +9,8 @@ const messages = {
     children: ReactNode;
   }
 const LocaleProvider = ({ children }:LayoutProps) => {
-    const { data: locale} = useQuery({
-        queryKey: ['userData'],
-        queryFn: () => getLocal()
-      });
+  const { language, getLang } = useStore();
+  let locale=getLang()||language
   return(
     //@ts-ignore
     <IntlProvider messages={messages[locale]} locale={locale}>

@@ -1,15 +1,13 @@
 'use client'
-import { Grid, Box, CircularProgress, Typography } from '@mui/material';
+import { Grid, Box, Typography } from '@mui/material';
 import PageContainer from '@/app/(DashboardLayout)/components/container/PageContainer';
 import { useQuery } from '@tanstack/react-query';
-// components
-import SalesOverview from '@/app/(DashboardLayout)/components/dashboard/SalesOverview';
+
 import ProductAnalysis from '@/app/(DashboardLayout)/components/dashboard/ProductAnalysis';
 import CategoriesTimeline from '@/app/(DashboardLayout)/components/dashboard/CategoriesTimeline';
 import ProductPerformance from '@/app/(DashboardLayout)/components/dashboard/ProductPerformance';
 import Blog from '@/app/(DashboardLayout)/components/dashboard/Blog';
-import MonthlyEarnings from '@/app/(DashboardLayout)/components/dashboard/MonthlyEarnings';
-import Products from '@/components/shared/Products';
+
 import { Spin } from 'antd';
 
 // Fetch function to get data

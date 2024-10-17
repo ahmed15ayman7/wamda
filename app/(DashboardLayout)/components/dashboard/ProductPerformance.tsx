@@ -13,6 +13,7 @@ import {
 import { useRouter } from 'next/navigation';
 import { IUser } from '@/lib/models/user.models'; // Ensure the path is correct
 import DashboardCard from '@/app/(DashboardLayout)/components/shared/DashboardCard';
+import { useTranslations } from 'next-intl';
 
 interface ProductPerformanceProps {
     userData: {  name: string;
@@ -26,26 +27,26 @@ interface ProductPerformanceProps {
 
 const ProductPerformance: React.FC<ProductPerformanceProps> = ({ userData }) => {
     const router = useRouter();
-
+    const t = useTranslations('productPerformance');
     return (
         <DashboardCard title="Users Performance">
             <Box sx={{ overflow: 'auto', width: { xs: '280px', sm: 'auto' } }}>
                 <Table aria-label="simple table" sx={{ whiteSpace: "nowrap", mt: 2 }}>
                     <TableHead>
                         <TableRow>
-                            <TableCell>
+                        <TableCell>
                                 <Typography variant="subtitle2" fontWeight={600}>
-                                    Id
+                                    {t('id')}
                                 </Typography>
                             </TableCell>
                             <TableCell>
                                 <Typography variant="subtitle2" fontWeight={600}>
-                                    Name
+                                    {t('name')}
                                 </Typography>
                             </TableCell>
                             <TableCell>
                                 <Typography variant="subtitle2" fontWeight={600}>
-                                    Email
+                                    {t('email')}
                                 </Typography>
                             </TableCell>
                             {/* <TableCell>
@@ -105,7 +106,7 @@ const ProductPerformance: React.FC<ProductPerformanceProps> = ({ userData }) => 
                     variant="outlined"
                     onClick={() => router.push('/dashboard/utilities/users')}
                 >
-                    Show More
+                     {t('showMore')}
                 </Button>
             </Box>
         </DashboardCard>

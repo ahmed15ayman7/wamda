@@ -3,6 +3,7 @@ const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 import { useTheme } from '@mui/material/styles';
 import { Grid, Stack, Typography } from '@mui/material';
 import DashboardCard from '@/app/(DashboardLayout)/components/shared/DashboardCard';
+import { useTranslations } from 'next-intl';
 
 interface ProductAnalysisProps {
   numberOfProducts: number;
@@ -15,7 +16,7 @@ const ProductAnalysis: React.FC<ProductAnalysisProps> = ({
   numberOfCategories,
   numberOfUsers,
 }) => {
-  // Chart color
+  const t = useTranslations('productAnalysis'); // استخدام 'productAnalysis' للحصول على الترجمة
   const theme = useTheme();
   const primary = theme.palette.primary.main;
   const primarylight = '#ecf2ff';
@@ -76,22 +77,22 @@ const ProductAnalysis: React.FC<ProductAnalysisProps> = ({
   ];
 
   return (
-    <DashboardCard title="Product Analysis">
+    <DashboardCard title={t('title')}>
       <Grid container spacing={3}>
         {/* Column for product and category counts */}
         <Grid item xs={7} sm={7}>
           <Typography variant="h4" fontWeight="700">
-            Summary
+            {t('summary')}
           </Typography>
           <Stack spacing={2} mt={2}>
             <Typography variant="subtitle1" fontWeight="600">
-              Products: {numberOfProducts}
+              {t('products')}: {numberOfProducts}
             </Typography>
             <Typography variant="subtitle1" fontWeight="600">
-              Categories: {numberOfCategories}
+              {t('categories')}: {numberOfCategories}
             </Typography>
             <Typography variant="subtitle1" fontWeight="600">
-              Users: {numberOfUsers}
+              {t('users')}: {numberOfUsers}
             </Typography>
           </Stack>
         </Grid>

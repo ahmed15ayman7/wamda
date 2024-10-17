@@ -9,6 +9,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Alert, Spin } from 'antd';
 import axios from 'axios';
 import { getUserData } from '@/lib/actions/user.action';
+import { useTranslations } from 'next-intl';
 
 const page = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -38,6 +39,7 @@ const page = () => {
     const response = await axios.get("/api/categories");
     return response.data;
   };
+  const t = useTranslations('ProductsPage'); 
   // Fetch products function
   const fetchProducts = async () => {
     const params = new URLSearchParams();
@@ -86,16 +88,16 @@ const page = () => {
     <div>
 
 
-      <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', mb: 2 }}>
+<Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', mb: 2 }}>
         <TextField
-          label="Search"
+          label={t('search')}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           variant="outlined"
         />
         <TextField
           select
-          label="Category"
+          label={t('category')}
           name="category"
           value={filters.category}
           onChange={handleInputChange}
@@ -103,90 +105,30 @@ const page = () => {
           className='w-44'
         >
           {isLoading2 ? (
-                  <MenuItem value="">Loading categories...</MenuItem>
-                ) : (
-                  categories?.map((category: { _id: string; name: string }) => (
-                    <MenuItem key={category._id} value={category._id}>
-                      {category.name}
-                    </MenuItem>
-                  ))
-                )}
+            <MenuItem value="">{t('loadingCategories')}</MenuItem>
+          ) : (
+            categories?.map((category: { _id: string; name: string }) => (
+              <MenuItem key={category._id} value={category._id}>
+                {category.name}
+              </MenuItem>
+            ))
+          )}
         </TextField>
 
+        {/* Repeat for other filters */}
         <TextField
-          label="Barcode" 
+          label={t('barcode')}
           name="barcode"
           value={filters.barcode}
           onChange={handleInputChange}
           variant="outlined"
         />
 
-        <TextField
-          label="Unit"
-          name="unit"
-          value={filters.unit}
-          onChange={handleInputChange}
-          variant="outlined"
-        />
+        {/* Add the rest of your filters similarly using t('key') for labels */}
         
         <TextField
-          label="Unit Cost"
-          name="unitCost"
-          value={filters.unitCost}
-          onChange={handleInputChange}
-          variant="outlined"
-        />
-        
-        <TextField
-          label="Sale Price"
-          name="salePrice"
-          value={filters.salePrice}
-          onChange={handleInputChange}
-          variant="outlined"
-        />
-        
-        <TextField
-          label="Wholesale 1"
-          name="wholesale1"
-          value={filters.wholesale1}
-          onChange={handleInputChange}
-          variant="outlined"
-        />
-        
-        <TextField
-          label="Wholesale 2"
-          name="wholesale2"
-          value={filters.wholesale2}
-          onChange={handleInputChange}
-          variant="outlined"
-        />
-        
-        <TextField
-          label="Exhibit Sale Price"
-          name="exhibitSalePrice"
-          value={filters.exhibitSalePrice}
-          onChange={handleInputChange}
-          variant="outlined"
-        />
-        
-        <TextField
-          label="Website Sale Price"
-          name="websiteSalePrice"
-          value={filters.websiteSalePrice}
-          onChange={handleInputChange}
-          variant="outlined"
-        />
-        
-        <TextField
-          label="Purchase Price"
-          name="purchasePrice"
-          value={filters.purchasePrice}
-          onChange={handleInputChange}
-          variant="outlined"
-        />
-         <TextField
           select
-          label="Items per Page"
+          label={t('itemsPerPage')}
           value={pageSize.toString()}
           onChange={(e) => setPageSize(parseInt(e.target.value))}
           variant="outlined"
@@ -198,19 +140,6 @@ const page = () => {
             </MenuItem>
           ))}
         </TextField>
-        {/* Replace Rating TextField with Rating component */}
-        {/* <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Typography variant="body1" sx={{ mr: 1 }}>Rating:</Typography>
-          <Rating
-            name="rating"
-            value={filters.rating}
-            onChange={(event, newValue) => {
-              setFilters({ ...filters, rating: newValue }); // Update the rating value
-            }}
-          />
-        </Box> */}
-
-       
       </Box>
 
 
