@@ -17,6 +17,7 @@ const Header = () => {
     setDrawerOpen(open);
   };
   
+  
   const { language, setLanguage, getLang } = useStore();
   const [locale, setLocale] = useState<'en' | 'ar'>(language);
   
