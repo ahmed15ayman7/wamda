@@ -1,10 +1,8 @@
 "use client";
 import React, { useState } from 'react';
-import Products from '@/components/shared/Products';
 import Blog from '@/app/(DashboardLayout)/components/dashboard/Blog';
-import { Box, Button, Tooltip, TextField, MenuItem, Typography, Rating, Pagination } from '@mui/material';
-import Link from 'next/link';
-import { IconLayoutGridAdd } from '@tabler/icons-react';
+import { Box,  TextField, MenuItem,  Pagination } from '@mui/material';
+
 import { useQuery } from '@tanstack/react-query';
 import { Alert, Spin } from 'antd';
 import axios from 'axios';

@@ -50,9 +50,12 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ categoryData, onSuccess }) 
     queryKey: ['products'],
     queryFn: async () => {
       const response = await axios.get('/api/products');
-      return response.data;
+      return response.data.products;
     },
   });
+console.log(products
+
+)
 
   const onSubmit = async (data: CategoryFormData) => {
     try {
@@ -121,7 +124,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ categoryData, onSuccess }) 
               >
                 {products?.map((product: any) => (
                   <MenuItem key={product._id} value={product._id}>
-                    {product.name}
+                    {product.itemName}
                   </MenuItem>
                 ))}
               </Select>

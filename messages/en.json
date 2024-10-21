@@ -48,7 +48,9 @@
     "deleteSuccess": "Category deleted successfully",
     "deleteFailure": "Failed to delete category",
     "loadingCategories": "Loading categories...",
-    "errorLoading": "Error loading categories"
+    "errorLoading": "Error loading categories",
+    "cancel": "Cancel"
+
   },
   "productDetail": {
     "title": "Product Details",

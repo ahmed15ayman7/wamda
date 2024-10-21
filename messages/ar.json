@@ -48,7 +48,8 @@
     "deleteSuccess": "تم حذف الفئة بنجاح",
     "deleteFailure": "فشل في حذف الفئة",
     "loadingCategories": "جاري تحميل الفئات...",
-    "errorLoading": "خطأ في تحميل الفئات"
+    "errorLoading": "خطأ في تحميل الفئات",
+    "cancel": "إلغاء"
   },
   "productDetail": {
     "title": "تفاصيل المنتج",
