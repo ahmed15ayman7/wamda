@@ -5,6 +5,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { categorySchema } from '@/lib/schemas/categorySchema';
+import { Spin } from 'antd';
 import {
   TextField,
   Button,
@@ -53,9 +54,6 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ categoryData, onSuccess }) 
       return response.data.products;
     },
   });
-console.log(products
-
-)
 
   const onSubmit = async (data: CategoryFormData) => {
     try {
@@ -78,7 +76,9 @@ console.log(products
     }
   };
 
-  if (isLoading) return <CircularProgress />;
+  if (isLoading) return     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '70vh' }}>
+  <Spin size="large" />
+</div>;
 
   return (
     <motion.div

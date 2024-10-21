@@ -21,7 +21,6 @@ const ProductSchema: Schema = new Schema({
   barcode: { type: String, required: true,unique:true },
   itemName: { type: String, required: true },
   unit: { type: String, required: true },
-  categoryName: { type: String, required: true },
   purchasePrice: { type: Number, required: true },
   unitCost: { type: Number, required: true },
   salePrice: { type: Number, required: true },
@@ -29,6 +28,7 @@ const ProductSchema: Schema = new Schema({
   wholesale2: { type: Number, required: true },
   exhibitSalePrice: { type: Number, required: true },
   websiteSalePrice: { type: Number, required: true },
+  categoryName: { type: String, required: true },
   category: {
     type: Schema.Types.ObjectId, // This references the Category model
     ref: 'Category',

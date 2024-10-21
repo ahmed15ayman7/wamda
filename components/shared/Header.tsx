@@ -1,5 +1,4 @@
-
-"use client"
+"use client";
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { IconHome, IconShoppingCart, IconList, IconInfoCircle, IconMenu, IconX } from '@tabler/icons-react';
@@ -15,13 +14,13 @@ const Header = () => {
   const router = useRouter();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
-  const toggleDrawer = (open:boolean) => () => {
+  const toggleDrawer = (open: boolean) => () => {
     setDrawerOpen(open);
   };
   const { language, setLanguage, getLang } = useStore();
   const [locale, setLocale] = useState<'en' | 'ar'>(language);
 
-  const t = useTranslations("header");
+  const t = useTranslations('header');
   useEffect(() => {
     const currentLang = getLang();
     if (currentLang) {
@@ -42,20 +41,32 @@ const Header = () => {
 
   const drawerItems = (
     <div className="flex flex-col p-4">
-      <button className="flex items-center space-x-2 p-2 text-gray-600 hover:underline" onClick={() => handleNavigation('/')}>
-        <IconHome />
+      <button
+        className="flex items-center space-x-2 p-2 text-gray-600 hover:text-[#7EBE4B]"
+        onClick={() => handleNavigation('/')}
+      >
+        <IconHome color="#7EBE4B" />
         <span>{t('home')}</span>
       </button>
-      <button className="flex items-center space-x-2 p-2 text-gray-600 hover:underline" onClick={() => handleNavigation('/products')}>
-        <IconShoppingCart />
+      <button
+        className="flex items-center space-x-2 p-2 text-gray-600 hover:text-[#7EBE4B]"
+        onClick={() => handleNavigation('/products')}
+      >
+        <IconShoppingCart color="#7EBE4B" />
         <span>{t('products')}</span>
       </button>
-      <button className="flex items-center space-x-2 p-2 text-gray-600 hover:underline" onClick={() => handleNavigation('/categories')}>
-        <IconList />
+      <button
+        className="flex items-center space-x-2 p-2 text-gray-600 hover:text-[#7EBE4B]"
+        onClick={() => handleNavigation('/categories')}
+      >
+        <IconList color="#7EBE4B" />
         <span>{t('categories')}</span>
       </button>
-      <button className="flex items-center space-x-2 p-2 text-gray-600 hover:underline" onClick={() => handleNavigation('/about')}>
-        <IconInfoCircle />
+      <button
+        className="flex items-center space-x-2 p-2 text-gray-600 hover:text-[#7EBE4B]"
+        onClick={() => handleNavigation('/about')}
+      >
+        <IconInfoCircle color="#7EBE4B" />
         <span>{t('about')}</span>
       </button>
     </div>
@@ -64,56 +75,70 @@ const Header = () => {
   return (
     <header className="bg-white shadow">
       <div className="flex justify-between items-center p-4">
-        <motion.div 
-          className='flex items-center' 
-          whileHover={{ scale: 1.1 }} 
+        <motion.div
+          className="flex items-center"
+          whileHover={{ scale: 1.1 }}
           transition={{ duration: 0.3 }}
-          style={{ cursor: 'pointer' }} 
-          onClick={() => { handleNavigation('/'); }}
+          style={{ cursor: 'pointer' }}
+          onClick={() => {
+            handleNavigation('/');
+          }}
         >
-          <Logo /> 
+          <Logo />
         </motion.div>
 
         {/* Drawer for mobile navigation */}
         {drawerOpen && (
           <div className="fixed inset-0 bg-white shadow-lg z-50 md:hidden">
             <div className="flex justify-between items-center p-4">
-              <motion.div 
-                className='flex items-center' 
-                whileHover={{ scale: 1.1 }} 
+              <motion.div
+                className="flex items-center"
+                whileHover={{ scale: 1.1 }}
                 transition={{ duration: 0.3 }}
-                style={{ cursor: 'pointer' }} 
-                onClick={() => { handleNavigation('/'); }}
+                style={{ cursor: 'pointer' }}
+                onClick={() => {
+                  handleNavigation('/');
+                }}
               >
-                <Logo /> 
+                <Logo />
               </motion.div>
               <button onClick={toggleDrawer(false)} className="p-2 text-gray-600">
                 <IconX />
               </button>
             </div>
-            <div className="w-1/2 p-4">
-              {drawerItems}
-            </div>
+            <div className="w-1/2 p-4">{drawerItems}</div>
           </div>
         )}
 
         {/* Desktop Navigation */}
         <div className="flex gap-2">
           <nav className="hidden md:flex space-x-4">
-            <button className="flex items-center space-x-2 p-2 text-gray-600 hover:underline" onClick={() => handleNavigation('/')}>
-              <IconHome />
+            <button
+              className="flex items-center space-x-2 p-2 text-gray-600 hover:text-[#7EBE4B]"
+              onClick={() => handleNavigation('/')}
+            >
+              <IconHome color="#7EBE4B" />
               <span>{t('home')}</span>
             </button>
-            <button className="flex items-center space-x-2 p-2 text-gray-600 hover:underline" onClick={() => handleNavigation('/products')}>
-              <IconShoppingCart />
+            <button
+              className="flex items-center space-x-2 p-2 text-gray-600 hover:text-[#7EBE4B]"
+              onClick={() => handleNavigation('/products')}
+            >
+              <IconShoppingCart color="#7EBE4B" />
               <span>{t('products')}</span>
             </button>
-            <button className="flex items-center space-x-2 p-2 text-gray-600 hover:underline" onClick={() => handleNavigation('/categories')}>
-              <IconList />
+            <button
+              className="flex items-center space-x-2 p-2 text-gray-600 hover:text-[#7EBE4B]"
+              onClick={() => handleNavigation('/categories')}
+            >
+              <IconList color="#7EBE4B" />
               <span>{t('categories')}</span>
             </button>
-            <button className="flex items-center space-x-2 p-2 text-gray-600 hover:underline" onClick={() => handleNavigation('/about')}>
-              <IconInfoCircle />
+            <button
+              className="flex items-center space-x-2 p-2 text-gray-600 hover:text-[#7EBE4B]"
+              onClick={() => handleNavigation('/about')}
+            >
+              <IconInfoCircle color="#7EBE4B" />
               <span>{t('about')}</span>
             </button>
           </nav>

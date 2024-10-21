@@ -2,6 +2,7 @@ import Category from '@/lib/models/category.models';
 import { connectDB } from '@/mongoose';
 import { NextResponse } from 'next/server';
 
+import Product from '@/lib/models/product.models';
 
 
 // GET: الحصول على فئة معينة حسب المعرف
@@ -29,6 +30,13 @@ export async function PUT(request: Request, { params }: { params: { id: string }
       const category = await Category.findByIdAndUpdate(id, body, { new: true });
       if (!category) {
           return NextResponse.json({ message: 'Category not found' }, { status: 404 });
+        }
+        if(body.products){
+
+          await Product.updateMany(
+            { _id: { $in: body.products } }, // Find all products whose _id is in the provided array
+            { category: category._id, categoryName:body.name } // Update the category reference and categoryName
+          );
         }
         return NextResponse.json(category);
     } catch (error) {

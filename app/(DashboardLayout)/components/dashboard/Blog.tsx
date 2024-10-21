@@ -122,9 +122,9 @@ const Blog = ({ products, role, permissions }: { products: ProductFormData[], ro
                 )}
               </Stack>
 
-              <Stack direction="row" justifyContent="space-between" alignItems="center" mt={2}>
+              {/* <Stack direction="row" justifyContent="space-between" alignItems="center" mt={2}>
                 <Rating name="read-only" size="small" value={product.rating} readOnly />
-              </Stack>
+              </Stack> */}
             </CardContent>
           </BlankCard>
         </Grid>

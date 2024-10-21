@@ -15,6 +15,7 @@ export async function GET(request: Request) {
 
     const search = searchParams.get('search') || '';
     const category = searchParams.get('category') || '';
+    const categoryName = searchParams.get('categoryName') || '';
     const unit = searchParams.get('unit') || '';
     const unitCost = searchParams.get('unitCost') || '';
     const salePrice = searchParams.get('salePrice') || '';
@@ -31,6 +32,7 @@ export async function GET(request: Request) {
     // Creating filter object for MongoDB query
     const filters: Record<string, any> = {};
 
+    if (categoryName) filters.category = categoryName;
     if (category) filters.category = category;
     if (unit) filters.unit = unit;
     if (barcode) filters.barcode = barcode; // Add barcode filter

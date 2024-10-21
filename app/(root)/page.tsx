@@ -63,9 +63,8 @@ const Page = () => {
     enabled: !!categories,
   });
   const { data: products2, error: productsError2, isLoading: productsLoading2 } = useQuery({
-    queryKey: ['products', selectedCategory, currentPage],
+    queryKey: ['products2'],
     queryFn: () => fetchProducts2(), 
-    enabled: !!categories,
   });
 
   if ( categoriesLoading ) return (

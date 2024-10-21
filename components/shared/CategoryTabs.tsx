@@ -5,10 +5,11 @@ import { motion } from 'framer-motion';
 import { ProductFormData } from '../forms/AddProduct';
 import Blog from '@/app/(DashboardLayout)/components/dashboard/Blog';
 import { Spin } from 'antd';
-import { useTranslations } from 'next-intl'; // استيراد useTranslation
+import { useTranslations } from 'next-intl';
 
 interface CategoryProps {
   name: string;
+  _id: string;
   products: ProductFormData[];
 }
 
@@ -18,7 +19,7 @@ interface Permissions {
   exhibitSalePrice: boolean;
   websiteSalePrice: boolean;
   salePrice: boolean;
-};
+}
 
 const CategoryTabs = ({
   productsLoading,
@@ -37,7 +38,7 @@ const CategoryTabs = ({
   setSelectedCategory: (i: string) => void;
   permissions?: Permissions
 }) => {
-  const  t  = useTranslations(); // استخدام useTranslation
+  const t = useTranslations();
 
   // Handle tab change
   const handleTabChange = (event: React.SyntheticEvent, newValue: string) => {
@@ -57,66 +58,108 @@ const CategoryTabs = ({
 
   return (
     <Box sx={{ width: '100%' }}>
-      {/* Tabs for first 4 categories */}
-      <Tabs
-        value={selectedCategory}
-        onChange={handleTabChange}
-        variant="scrollable"
-        scrollButtons="auto"
-        aria-label="category tabs"
-      >
-        <Tab
-          label={
-            <div className='flex gap-5'>
-              <p>{t('categoryTabs.all')}</p> {/* استخدام النص من ملف اللغة */}
-            </div>
-          }
-          value={""}
-          icon={<IconList size={20} />}
-          iconPosition="start"
-        />
-        {firstFourCategories.map((category) => (
+      {/* Box with Flexbox to align Tabs and Select side by side */}
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        {/* Tabs for first 4 categories */}
+        <Tabs
+          value={selectedCategory}
+          onChange={handleTabChange}
+          variant="scrollable"
+          scrollButtons="auto"
+          aria-label="category tabs"
+          sx={{
+            '.MuiTabs-indicator': {
+              backgroundColor: '#7EBE4B', // Green indicator color
+            },
+            '.MuiTab-root': {
+              color: '#12127F', // Blue text color
+              '&.Mui-selected': {
+                color: '#7EBE4B', // Green text color when selected
+              },
+            },
+          }}
+        >
           <Tab
-            key={category.name}
             label={
               <div className='flex gap-5'>
-                <Badge
-                  badgeContent={category.products.length}
-                  color="primary"
-                  overlap="circular"
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'left',
-                  }}
-                >
-                </Badge>
-                <p>{category.name}</p>
+                <p>{t('categoryTabs.all')}</p>
               </div>
             }
-            value={category.name}
+            value={""}
+            icon={<IconList size={20} />}
             iconPosition="start"
           />
-        ))}
-      </Tabs>
+          {firstFourCategories.map((category) => (
+            <Tab
+              key={category.name}
+              label={
+                <div className='flex gap-5'>
+                  <Badge
+                    badgeContent={category.products.length}
+                    color="success"
+                    overlap="circular"
+                    anchorOrigin={{
+                      vertical: 'top',
+                      horizontal: 'left',
+                    }}
+                  ></Badge>
+                  <p>{category.name}</p>
+                </div>
+              }
+              value={category._id}
+              iconPosition="start"
+            />
+          ))}
+        </Tabs>
 
-      {/* Select dropdown for remaining categories */}
-      {remainingCategories.length > 0 && (
-        <FormControl fullWidth sx={{ mt: 2 }}>
-          <InputLabel id="category-select-label">{t('categoryTabs.moreCategories')}</InputLabel>
-          <Select
-            labelId="category-select-label"
-            value={selectedCategory}
-            onChange={handleSelectChange}
-            label={t('categoryTabs.moreCategories')}
-          >
-            {remainingCategories.map((category) => (
-              <MenuItem key={category.name} value={category.name}>
-                {category.name} ({category.products.length})
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      )}
+        {/* Select dropdown for remaining categories */}
+        {remainingCategories.length > 0 && (
+          <FormControl sx={{ minWidth: 200 }}>
+            <InputLabel id="category-select-label">{t('categoryTabs.moreCategories')}</InputLabel>
+            <Select
+              labelId="category-select-label"
+              value={selectedCategory}
+              onChange={handleSelectChange}
+              label={t('categoryTabs.moreCategories')}
+              sx={{
+                '.MuiOutlinedInput-root': {
+                  '& fieldset': {
+                    borderColor: '#7EBE4B', // Green border
+                  },
+                  '&:hover fieldset': {
+                    borderColor: '#7EBE4B', // Green border on hover
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: '#7EBE4B', // Green border when focused
+                  },
+                },
+                '.MuiSelect-icon': {
+                  color: '#12127F', // Blue select arrow
+                },
+              }}
+            >
+              {remainingCategories.map((category) => (
+                <MenuItem key={category.name} value={category.name}>
+                  <div className='flex gap-5'>
+
+                  <Badge
+                    badgeContent={category.products.length}
+                    color="success"
+                    overlap="circular"
+                    anchorOrigin={{
+                      
+                      horizontal: 'left',
+                    }}
+                    >
+                    </Badge>
+                    {category.name} 
+                    </div>
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        )}
+      </Box>
 
       {/* Product List */}
       <motion.div
@@ -130,7 +173,7 @@ const CategoryTabs = ({
             {products && products.length > 0 ? (
               <Blog products={products} role={role} permissions={permissions} />
             ) : (
-              <Box>{t('categoryTabs.noProducts')}</Box> // استخدام النص من ملف اللغة
+              <Box>{t('categoryTabs.noProducts')}</Box>
             )}
           </Box>
         ) : (

@@ -45,6 +45,16 @@ const LandingPage = ({ products, type, permissions }: { products: ProductFormDat
               slidesPerView: 1,
             },
           }}
+          style={{
+            position: "relative",
+            //@ts-ignore
+            "--swiper-navigation-position": "absolute",
+            //@ts-ignore
+            "--swiper-navigation-color": "#7EBE4B",
+            //@ts-ignore
+            "--swiper-pagination-color": "#7EBE4B",
+            padding: " 25px 10px ",
+          }}
         >
           {products.map((product, index) => (
             <SwiperSlide key={index} className="flex flex-col items-center space-y-4">
@@ -104,9 +114,9 @@ const LandingPage = ({ products, type, permissions }: { products: ProductFormDat
                     </Stack>
 
                     {/* Rating */}
-                    <Stack direction="row" justifyContent="space-between" alignItems="center" mt={2}>
+                    {/* <Stack direction="row" justifyContent="space-between" alignItems="center" mt={2}>
                       <Rating name="read-only" size="small" value={product.rating} readOnly />
-                    </Stack>
+                    </Stack> */}
                   </CardContent>
                 </BlankCard>
               </Grid>
