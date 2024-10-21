@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 import { Rating } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { unitNames } from "@/constants/data";
 
 export interface ProductFormData {
   _id: string;
@@ -48,7 +49,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [productImagePreview, setProductImagePreview] = useState<string | null>(null);
   let router=useRouter()
-  const { control, handleSubmit, formState: { errors }, setValue, reset } = useForm<ProductFormData2>({
+  const { control, handleSubmit,watch, formState: { errors }, setValue, reset } = useForm<ProductFormData2>({
     resolver: zodResolver(productSchema),
   });
 
@@ -108,6 +109,11 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
   };
   
 
+  const selectedUnit = watch("unit");
+
+  // احصل على الاختصار للوحدة المختارة
+  const selectedUnitData = unitNames.find(unit => unit.name === selectedUnit);
+  const abbreviation = selectedUnitData ? selectedUnitData.abbreviation : "";
 
   return (
     <div className="max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-lg">
@@ -148,39 +154,49 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
             {errors.itemName && <span className="text-red-500">{errors.itemName.message}</span>}
           </div>
 
-          {/* Unit */}
-          <div>
-            <label className="block text-sm font-medium">{t('unit')}</label>
-            <Controller
-              name="unit"
-              control={control}
-              render={({ field }) => (
-                <input
-                  {...field}
-                  className="border border-gray-300 rounded-md p-2 w-full"
-                  placeholder={t('unit')}
-                />
-              )}
-            />
-            {errors.unit && <span className="text-red-500">{errors.unit.message}</span>}
-          </div>
+          {/* Unit Select */}
+      <div>
+        <label className="block text-sm font-medium">{t('unit')}</label>
+        <Controller
+          name="unit"
+          control={control}
+          render={({ field }) => (
+            <select
+              {...field}
+              className="border border-gray-300 rounded-md p-2 w-full"
+              // placeholder={t('unit')}
+              
+            >
+              <option value="" disabled>{t('unit')}</option>
+              {unitNames.map((unit, index) => (
+                <option key={index} value={unit.name}>
+                  {unit.name}
+                </option>
+              ))}
+            </select>
+          )}
+        />
+        {errors.unit && <span className="text-red-500">{errors.unit.message}</span>}
+      </div>
 
-          {/* Unit Name 2 */}
-          <div>
-            <label className="block text-sm font-medium">{t('unitName2')}</label>
-            <Controller
-              name="unitName2"
-              control={control}
-              render={({ field }) => (
-                <input
-                  {...field}
-                  className="border border-gray-300 rounded-md p-2 w-full"
-                  placeholder={t('unitName2')}
-                />
-              )}
+      {/* Unit Name 2 */}
+      <div>
+        <label className="block text-sm font-medium">{t('unitName2')}</label>
+        <Controller
+          name="unitName2"
+          control={control}
+          render={({ field }) => (
+            <input
+              {...field}
+              value={abbreviation} // ضبط قيمة الاختصار هنا
+              className="border border-gray-300 rounded-md p-2 w-full"
+              placeholder={t('unitName2')}
+              readOnly // جعل الحقل للقراءة فقط
             />
-            {errors.unitName2 && <span className="text-red-500">{errors.unitName2.message}</span>}
-          </div>
+          )}
+        />
+        {errors.unitName2 && <span className="text-red-500">{errors.unitName2.message}</span>}
+      </div>
 
           {/* Category */}
           <div>
@@ -202,7 +218,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
                   value={value}
                   className="border border-gray-300 rounded-md p-2 w-full"
                 >
-                  <option value="">{t('selectCategory')}</option>
+                  <option value="">{t('category')}</option>
                   {isLoading ? (
                     <option value="">{t('loadingCategories')}</option>
                   ) : (
@@ -345,7 +361,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
           </div>
 
           {/* Rating */}
-          <div>
+          {/* <div>
             <label className="block text-sm font-medium">{t('rating')}</label>
             <Controller
               name="rating"
@@ -360,7 +376,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
               )}
             />
             {errors.rating && <span className="text-red-500">{errors.rating.message}</span>}
-          </div>
+          </div> */}
         </div>
           {/* Product Image Upload */}
           <div>

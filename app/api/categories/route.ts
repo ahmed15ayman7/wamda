@@ -14,7 +14,6 @@ export async function GET() {
   }
 }
 
-// POST /api/categories - Create a new category
 export async function POST(req: Request) {
   try {
     await connectDB(); // Ensure database connection
@@ -22,15 +21,33 @@ export async function POST(req: Request) {
 
     // Create new category
     const newCategory = await Category.create(body);
-    if(body.products){
+    
+    if (body.products) {
+      // Find all categories that currently contain the products
+      const oldCategories = await Category.find({
+        products: { $in: body.products },
+      });
 
+      // Remove the products from the old categories
+      await Promise.all(
+        oldCategories.map(async (category) => {
+          await Category.updateOne(
+            { _id: category._id },
+            { $pull: { products: { $in: body.products } } }
+          );
+        })
+      );
+
+      // Update the products to the new category
       await Product.updateMany(
-        { _id: { $in: body.products } }, // Find all products whose _id is in the provided array
-        { category: newCategory._id, categoryName:body.name } // Update the category reference and categoryName
+        { _id: { $in: body.products } },
+        { category: newCategory._id, categoryName: body.name }
       );
     }
+
     return NextResponse.json(newCategory, { status: 201 });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to create category' }, { status: 500 });
   }
 }
+

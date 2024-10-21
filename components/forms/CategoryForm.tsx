@@ -76,9 +76,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ categoryData, onSuccess }) 
     }
   };
 
-  if (isLoading) return     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '70vh' }}>
-  <Spin size="large" />
-</div>;
+
 
   return (
     <motion.div
@@ -86,7 +84,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ categoryData, onSuccess }) 
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 py-5">
         {/* Category Name */}
         <FormControl fullWidth>
           <TextField
@@ -109,7 +107,6 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ categoryData, onSuccess }) 
           />
         </FormControl>
 
-        {/* Products */}
         <FormControl fullWidth>
           <InputLabel>{t('products')}</InputLabel> {/* استخدام الترجمة */}
           <Controller
@@ -118,20 +115,27 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ categoryData, onSuccess }) 
             defaultValue={[]}
             render={({ field }) => (
               <Select
-                {...field}
-                multiple
-                error={!!errors.products}
+              {...field}
+              style={{ border: 'none'}}
+              multiple
+              error={!!errors.products}
               >
-                {products?.map((product: any) => (
+              {!isLoading ?
+                products?.map((product: any) => (
                   <MenuItem key={product._id} value={product._id}>
                     {product.itemName}
                   </MenuItem>
-                ))}
+                ))
+                :
+                <MenuItem style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '10vh' }}  value={""}>
+ 
+  <Spin size="large" />
+                    </MenuItem>
+}
               </Select>
             )}
           />
         </FormControl>
-
         {/* Submit Button */}
         <Button
           variant="contained"

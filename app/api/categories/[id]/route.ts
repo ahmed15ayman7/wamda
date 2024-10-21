@@ -20,29 +20,49 @@ export async function GET(request: Request, { params }: { params: { id: string }
 }
 }
 
-// PUT: تعديل فئة معينة حسب المعرف
 export async function PUT(request: Request, { params }: { params: { id: string } }) {
-    const { id } = params;
-    const body = await request.json();
-    
-    try {
-      await connectDB()
+  const { id } = params;
+  const body = await request.json();
+
+  try {
+      await connectDB();
+
+      // البحث عن الفئة الموجودة وتحديثها
       const category = await Category.findByIdAndUpdate(id, body, { new: true });
       if (!category) {
           return NextResponse.json({ message: 'Category not found' }, { status: 404 });
-        }
-        if(body.products){
+      }
 
-          await Product.updateMany(
-            { _id: { $in: body.products } }, // Find all products whose _id is in the provided array
-            { category: category._id, categoryName:body.name } // Update the category reference and categoryName
+      // إذا كانت هناك منتجات جديدة، قم بتحديث الفئات القديمة
+      if (body.products) {
+          // البحث عن الفئات القديمة التي تحتوي على المنتجات
+          const oldCategories = await Category.find({
+              products: { $in: body.products },
+          });
+
+          // إزالة المنتجات من الفئات القديمة
+          await Promise.all(
+              oldCategories.map(async (oldCategory) => {
+                  await Category.updateOne(
+                      { _id: oldCategory._id },
+                      { $pull: { products: { $in: body.products } } }
+                  );
+              })
           );
-        }
-        return NextResponse.json(category);
-    } catch (error) {
-        return NextResponse.json({ message: 'Error updating category', error }, { status: 500 });
-    }
+
+          // تحديث المنتجات لإضافة الفئة الجديدة
+          await Product.updateMany(
+              { _id: { $in: body.products } },
+              { category: category._id, categoryName: body.name }
+          );
+      }
+
+      return NextResponse.json(category);
+  } catch (error) {
+      return NextResponse.json({ message: 'Error updating category', error }, { status: 500 });
+  }
 }
+
 
 // DELETE: حذف فئة معينة حسب المعرف
 export async function DELETE(request: Request, { params }: { params: { id: string } }) {
