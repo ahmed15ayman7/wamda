@@ -16,7 +16,7 @@ export const productSchema = z.object({
   exhibitSalePrice: z.string().min(0, "Must be positive"),
   websiteSalePrice: z.string().min(0, "Must be positive"),
   productImage: z.string().url("required image product"),
-  rating: z.number().min(1, "Rating is required").max(5, "Rating must be at most 5"),
+  rating: z.number().min(1, "Rating is required").max(5, "Rating must be at most 5").optional(),
 });
 
 export type ProductFormData2 = z.infer<typeof productSchema>;

@@ -201,7 +201,8 @@
       "uploadImage": "رفع الصورة",
       "changeImage": "تغيير الصورة",
       "submitButton": "إضافة منتج",
-      "updateButton": "تحديث المنتج"
+      "updateButton": "تحديث المنتج",
+    "loadingCategories": "جاري تحميل الفئات..."
     }
 ,  "categoryForm": {
   "categoryName": "اسم الفئة",

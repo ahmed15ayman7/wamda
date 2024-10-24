@@ -9,13 +9,13 @@ export async function GET(request: Request) {
   try {
     await connectDB();
 
-    // Parse the URL and extract query parameters
     const url = new URL(request.url);
     const searchParams = url.searchParams;
-
+    
+    const page = searchParams.get('page') || '1';
+    const pageSize = searchParams.get('pageSize') || '10';
     const search = searchParams.get('search') || '';
     const category = searchParams.get('category') || '';
-    const categoryName = searchParams.get('categoryName') || '';
     const unit = searchParams.get('unit') || '';
     const unitCost = searchParams.get('unitCost') || '';
     const salePrice = searchParams.get('salePrice') || '';
@@ -26,13 +26,10 @@ export async function GET(request: Request) {
     const purchasePrice = searchParams.get('purchasePrice') || '';
     const rating = searchParams.get('rating') || '';
     const barcode = searchParams.get('barcode') || ''; // New barcode filter
-    const page = searchParams.get('page') || '1';
-    const pageSize = searchParams.get('pageSize') || '10';
 
     // Creating filter object for MongoDB query
     const filters: Record<string, any> = {};
 
-    if (categoryName) filters.categoryName = categoryName;
     if (category) filters.category = category;
     if (unit) filters.unit = unit;
     if (barcode) filters.barcode = barcode; // Add barcode filter
@@ -56,10 +53,10 @@ export async function GET(request: Request) {
     // Pagination
     const limit = parseInt(pageSize);
     const skip = (parseInt(page) - 1) * limit;
-
+    console.log("kjhjklkjhjkl😀",limit,skip,filters)
     // Fetching products with filters, pagination
-    const products = await Product.find(filters).skip(skip).limit(limit);
-
+    const products = await Product.find(filters).skip(skip).limit(1).lean();
+    console.log("kjhjklkjhjkl😀",products)
     // Counting total products for pagination
     const totalProducts = await Product.countDocuments(filters);
 

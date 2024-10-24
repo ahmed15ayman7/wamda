@@ -18,23 +18,25 @@ interface IProduct extends Document {
 }
 
 const ProductSchema: Schema = new Schema({
-  barcode: { type: String, required: true,unique:true },
-  itemName: { type: String, required: true },
-  unit: { type: String, required: true },
-  purchasePrice: { type: Number, required: true },
-  unitCost: { type: Number, required: true },
-  salePrice: { type: Number, required: true },
-  wholesale1: { type: Number, required: true },
-  wholesale2: { type: Number, required: true },
-  exhibitSalePrice: { type: Number, required: true },
-  websiteSalePrice: { type: Number, required: true },
-  categoryName: { type: String, required: true },
+  barcode: { type: String, required: true,unique:true,index:true },
+  itemName: { type: String, required: true,index:true },
+  unit: { type: String, required: true,index:true },
+  purchasePrice: { type: Number, required: true,index:true },
+  unitCost: { type: Number, required: true,index:true },
+  salePrice: { type: Number, required: true,index:true },
+  wholesale1: { type: Number, required: true,index:true },
+  wholesale2: { type: Number, required: true,index:true },
+  exhibitSalePrice: { type: Number, required: true,index:true },
+  websiteSalePrice: { type: Number, required: true,index:true },
+  categoryName: { type: String, required: true,index:true },
   category: {
-    type: Schema.Types.ObjectId, // This references the Category model
-    ref: 'Category',
-    // required: true, 
+    type: Schema.Types.ObjectId,
+    ref: 'Category'
+    // required: true,
+    ,
+    index:true
   },
-  unitName2: { type: String, required: true },
+  unitName2: { type: String, required: true,index:true },
   productImage: { type: String },
   rating:{type:Number,default:4}
 });

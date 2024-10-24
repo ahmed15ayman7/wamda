@@ -1,4 +1,7 @@
+// import { uploadToGoogleDrive } from '@/lib/googleDrive';
 "use client";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { storage } from "@/firebaseConfig"; 
 import React, { useRef, useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -14,7 +17,8 @@ import { Rating } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { unitNames } from "@/constants/data";
-
+import { isBase64Image } from "@/lib/utils";
+import { useUploadThing } from "@/uploadthing";
 export interface ProductFormData {
   _id: string;
   barcode: string;
@@ -47,6 +51,7 @@ interface ProductFormProps {
 const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
   const t = useTranslations('ProductForm');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [abbreviation, setabbreviation] = useState("");
   const [productImagePreview, setProductImagePreview] = useState<string | null>(null);
   let router=useRouter()
   const { control, handleSubmit,watch, formState: { errors }, setValue, reset } = useForm<ProductFormData2>({
@@ -54,14 +59,12 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
   });
 
   const avatarUrl = useRef("");
-
-  // Fetch categories using useQuery
+  let { startUpload } = useUploadThing("mediaPost");
   const { data: categories, isLoading } = useQuery({
     queryKey: ["categories"],
     queryFn: () => fetchCategories(),
   });
 
-  // Update form with existing product data if in edit mode
   useEffect(() => {
     if (product) {
       reset(product); // Populate form with product data
@@ -74,31 +77,75 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
     setProductImagePreview(imgSrc);
     setValue("productImage", imgSrc);
   };
+
+
   const handleFormSubmit = async (data: ProductFormData2) => {
     const toastId = toast.loading("Saving product..."); // Start loading toast
+    console.log(data);
+  
     try {
+      let uploadedImage;
+  
+      if (data.productImage) {
+        const blob = data.productImage;
+        const base64Data = blob.split(',')[1];
+        const byteCharacters = atob(base64Data);
+        const byteNumbers = new Array(byteCharacters.length);
+  
+        for (let i = 0; i < byteCharacters.length; i++) {
+          byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+  
+        const byteArray = new Uint8Array(byteNumbers);
+        const file = new File([byteArray], `${data.itemName}.jpeg`, {
+          type: "image/jpeg",
+        });
+  
+        // Upload image to Firebase Storage
+        const storageRef = ref(storage, `products/${file.name}`);
+        const snapshot = await uploadBytes(storageRef, file);
+  
+        // Get the image URL after upload
+        uploadedImage = await getDownloadURL(snapshot.ref);
+      }
+  
+      const payload = {
+        ...data,
+        unitName2: abbreviation,
+        productImage: uploadedImage, // Store the Firebase URL in the database
+      };
+  
       if (product) {
-        // Update product if editing
-        await axios.put(`/api/products/${product._id}`, data);
-        toast.update(toastId, {
-          render: "Product updated successfully!",
-          type: "success",
-          isLoading: false,
-          autoClose: 3000,
-        });
-        router.back();
+        if (uploadedImage) {
+          await axios.put(`/api/products/${product._id}`, payload);
+          toast.update(toastId, {
+            render: "Product updated successfully!",
+            type: "success",
+            isLoading: false,
+            autoClose: 3000,
+          });
+          reset();
+          router.back(); // Go back to the previous page
+        } else {
+          console.log(payload);
+        }
       } else {
-        await axios.post('/api/products', data);
-        toast.update(toastId, {
-          render: "Product added successfully!",
-          type: "success",
-          isLoading: false,
-          autoClose: 3000,
-        });
-        reset();
-        router.refresh(); // Reload the page after adding a product
+        if (uploadedImage) {
+          await axios.post("/api/products", payload);
+          toast.update(toastId, {
+            render: "Product added successfully!",
+            type: "success",
+            isLoading: false,
+            autoClose: 3000,
+          });
+          reset(); // Reset the form after adding the product
+          router.refresh(); // Reload the page after adding a product
+        } else {
+          console.log(payload);
+        }
       }
     } catch (error) {
+      console.error(error);
       toast.update(toastId, {
         render: "Failed to save product. Please try again.",
         type: "error",
@@ -109,11 +156,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
   };
   
 
-  const selectedUnit = watch("unit");
 
-  // احصل على الاختصار للوحدة المختارة
-  const selectedUnitData = unitNames.find(unit => unit.name === selectedUnit);
-  const abbreviation = selectedUnitData ? selectedUnitData.abbreviation : "";
 
   return (
     <div className="max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-lg">
@@ -165,9 +208,16 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
               {...field}
               className="border border-gray-300 rounded-md p-2 w-full"
               // placeholder={t('unit')}
+              onChange={(e)=>{field.onChange(e)
+                const selectedUnit = watch("unit");
+                // احصل على الاختصار للوحدة المختارة
+                const selectedUnitData = unitNames.find(unit => unit.name === selectedUnit);
+                const abbreviation = selectedUnitData ? selectedUnitData.abbreviation : "";
+                setabbreviation(abbreviation)
+              }}
               
             >
-              <option value="" disabled>{t('unit')}</option>
+              <option value="" selected disabled>{t('unit')}</option>
               {unitNames.map((unit, index) => (
                 <option key={index} value={unit.name}>
                   {unit.name}
@@ -188,10 +238,10 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
           render={({ field }) => (
             <input
               {...field}
-              value={abbreviation} // ضبط قيمة الاختصار هنا
+              value={abbreviation}
               className="border border-gray-300 rounded-md p-2 w-full"
               placeholder={t('unitName2')}
-              readOnly // جعل الحقل للقراءة فقط
+              readOnly 
             />
           )}
         />

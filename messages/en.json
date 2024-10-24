@@ -202,7 +202,9 @@
     "uploadImage": "Upload Image",
     "changeImage": "Change Image",
     "submitButton": "Add Product",
-    "updateButton": "Update Product"
+    "updateButton": "Update Product",
+    "loadingCategories": "Loading categories..."
+
   }
 , "categoryForm": {
   "categoryName": "Category Name",
