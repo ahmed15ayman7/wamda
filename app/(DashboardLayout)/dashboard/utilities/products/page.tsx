@@ -11,6 +11,7 @@ import axios from 'axios';
 import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import useStore from '@/hooks/zustand';
+import { getUserData } from '@/lib/actions/user.action';
 
 const ProductsPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -40,6 +41,10 @@ const ProductsPage = () => {
     const response = await axios.get("/api/categories");
     return response.data;
   };
+  const fetchUnits = async () => {
+    const response = await axios.get("/api/units");
+    return response.data;
+  };
   // Fetch products function
   const t = useTranslations('ProductsPage'); 
   const fetchProducts = async () => {
@@ -62,7 +67,10 @@ const ProductsPage = () => {
     }
     return response.json();
   };
-
+  const { data: userData, isLoading:isLoadinguser} = useQuery({
+    queryKey: ['userData'],
+    queryFn: () => getUserData()
+  });
   const { data: products, error, isLoading,refetch } = useQuery({
     queryKey: ['products', searchTerm, currentPage, filters],
     queryFn: fetchProducts,
@@ -70,6 +78,10 @@ const ProductsPage = () => {
   const { data: categories, isLoading:isLoading2 } = useQuery({
     queryKey: ["categories"],
     queryFn: () => fetchCategories(),
+  });
+  const { data: units, isLoading:isLoading3 } = useQuery({
+    queryKey: ["units"],
+    queryFn: () => fetchUnits(),
   });
 
   if (error) {
@@ -91,6 +103,7 @@ const ProductsPage = () => {
             variant="outlined"
             className=' flex flex-grow'
           />
+         { !isLoadinguser&&userData.role==="admin" &&
           <Tooltip title={t('addCategory')} arrow>
             <Link href="/dashboard/utilities/categories/add" passHref>
               <Button
@@ -101,12 +114,13 @@ const ProductsPage = () => {
                 
                 component={motion.div}
                 whileHover={{ scale: 1.1 }}
-              >
+                >
                 {t('addCategory')}
               </Button>
             </Link>
-          </Tooltip>
+          </Tooltip>}
         </div>
+       { !isLoadinguser&&userData.role==="admin" &&
         <div className="flex justify-between items-center max-sm:w-full gap-4 mb-2 ">
           <Products refetch={refetch} />
           <Tooltip title="Add a new product" arrow>
@@ -116,7 +130,7 @@ const ProductsPage = () => {
               </Button>
             </Link>
           </Tooltip>
-        </div>
+        </div>}
       </Box>
 
 
@@ -149,13 +163,25 @@ const ProductsPage = () => {
           variant="outlined"
         />
 
-        <TextField
+<TextField
+          select
           label={t('unit')}
           name="unit"
           value={filters.unit}
           onChange={handleInputChange}
           variant="outlined"
-        />
+          className='w-44'
+        >
+          {isLoading3 ? (
+            <MenuItem value="">Loading units... <Spin /></MenuItem>
+          ) : (
+            units?.map((unit: { _id: string; name: string }) => (
+              <MenuItem key={unit._id} value={unit.name}>
+                {unit.name}
+              </MenuItem>
+            ))
+          )}
+        </TextField>
 
         <TextField
           label={t('unitCost')}
@@ -227,6 +253,19 @@ const ProductsPage = () => {
             </MenuItem>
           ))}
         </TextField>
+        <Tooltip title={t('addUnit')} arrow>
+            <Link href="/dashboard/utilities/units/add" passHref>
+              <Button
+                variant="contained"
+                color="primary"
+                startIcon={<IconPlus />}
+                component={motion.div}
+                whileHover={{ scale: 1.1 }}
+                >
+                {t('addUnit')} {/* Use translation for the button */}
+              </Button>
+            </Link>
+          </Tooltip>
       </Box>
 
 
@@ -248,7 +287,7 @@ const ProductsPage = () => {
         </div>
       )}
 
-      {!isLoading && <Blog products={products.products} role='admin' />}
+      {!isLoading && !isLoadinguser && <Blog products={products.products} role={userData.role} permissions={userData.permissions} />}
     </div>
   );
 };

@@ -1,8 +1,11 @@
+"use client"
 import { useMediaQuery, Box, Drawer } from "@mui/material";
 import SidebarItems from "./SidebarItems";
 import { Upgrade } from "./Updrade";
 import { Sidebar, Logo } from 'react-mui-sidebar';
 import useStore from "@/hooks/zustand";
+import { useQuery } from "@tanstack/react-query";
+import { getUserData } from "@/lib/actions/user.action";
 
 interface ItemType {
   isMobileSidebarOpen: boolean;
@@ -32,7 +35,10 @@ const MSidebar = ({
     },
   };
 
-
+  const { data: userData, isLoading:isLoadinguser} = useQuery({
+    queryKey: ['userData'],
+    queryFn: () => getUserData()
+  });
   if (lgUp) {
     return (
       <Box
@@ -80,7 +86,8 @@ const MSidebar = ({
                 {/* Sidebar Items */}
                 {/* ------------------------------------------- */}
                 <SidebarItems />
-                <Upgrade />
+                {!isLoadinguser&&userData.role==="admin"&&
+                <Upgrade />}
               </Box>
             </Sidebar >
           </Box>
@@ -88,19 +95,19 @@ const MSidebar = ({
       </Box>
     );
   }
-
+  
   return (
     <Drawer
     anchor={getLang()==="en"?"left":"right"}
-      open={isMobileSidebarOpen}
-      onClose={onSidebarClose}
-      variant="temporary"
-      PaperProps={{
-        sx: {
-          boxShadow: (theme) => theme.shadows[8],
-          ...scrollbarStyles,
-        },
-      }}
+    open={isMobileSidebarOpen}
+    onClose={onSidebarClose}
+    variant="temporary"
+    PaperProps={{
+      sx: {
+        boxShadow: (theme) => theme.shadows[8],
+        ...scrollbarStyles,
+      },
+    }}
     >
       {/* ------------------------------------------- */}
       {/* Sidebar Box */}
@@ -115,7 +122,7 @@ const MSidebar = ({
           themeColor="#5d87ff"
           themeSecondaryColor="#49beff"
           showProfile={false}
-        >
+          >
           {/* ------------------------------------------- */}
           {/* Logo */}
           {/* ------------------------------------------- */}
@@ -124,7 +131,8 @@ const MSidebar = ({
           {/* Sidebar Items */}
           {/* ------------------------------------------- */}
           <SidebarItems />
-          <Upgrade />
+          {!isLoadinguser&&userData.role==="admin"&&
+          <Upgrade />}
         </Sidebar>
       </Box>
       {/* ------------------------------------------- */}

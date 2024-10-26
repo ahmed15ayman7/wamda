@@ -17,7 +17,7 @@ export async function middleware(request: NextRequest) {
     // console.log('Decoded Token:', payload); // Log the decoded token
 
     // Check if the user role is admin
-    if (payload.role !== 'admin') {
+    if (payload.role !== 'admin' &&payload.role !== 'user') {
       // console.log('Unauthorized Access: Role is not admin', payload.role); // Log the role
       return NextResponse.redirect(new URL('/authentication/login', request.url));
     }

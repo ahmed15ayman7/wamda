@@ -9,8 +9,10 @@ import { IconUserPlus } from '@tabler/icons-react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { motion } from 'framer-motion';
-import { addUser } from '@/lib/actions/user.action';
+import { addUser, getUserData } from '@/lib/actions/user.action';
 import { useTranslations } from 'next-intl'; // استخدام next-intl لدعم الترجمة
+import { useQuery } from '@tanstack/react-query';
+import { notFound } from 'next/navigation';
 
 const AddUserPage: React.FC = () => {
   const  t  = useTranslations(); // استدعاء دالة الترجمة
@@ -23,6 +25,10 @@ const AddUserPage: React.FC = () => {
     resolver: zodResolver(userSchema),
   });
 
+  const { data: userData, isLoading:isLoadinguser} = useQuery({
+    queryKey: ['userData'],
+    queryFn: () => getUserData()
+  });
   const [permissions, setPermissions] = useState({
     wholesale1: false,
     wholesale2: false,
@@ -59,7 +65,7 @@ const AddUserPage: React.FC = () => {
     }
   };
 
-  return (
+  return !isLoadinguser&& userData.role==="admin"?(
     <Container component={motion.div} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <Box
         component="form"
@@ -220,7 +226,7 @@ const AddUserPage: React.FC = () => {
         <ToastContainer />
       </Box>
     </Container>
-  );
+  ):notFound();
 };
 
 export default AddUserPage;

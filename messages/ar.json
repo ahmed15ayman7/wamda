@@ -42,6 +42,7 @@
   "CategoriesPage":{
     "categories": "الفئات",
     "addCategory": "إضافة فئة",
+    "addUnit": "إضافة وحدة",
     "viewCategory": "عرض الفئة",
     "editCategory": "تعديل الفئة",
     "deleteCategory": "حذف الفئة",
@@ -49,6 +50,17 @@
     "deleteFailure": "فشل في حذف الفئة",
     "loadingCategories": "جاري تحميل الفئات...",
     "errorLoading": "خطأ في تحميل الفئات",
+    "cancel": "إلغاء"
+  },
+  "UnitsPage":{
+    "units": "الوحدات",
+    "addCategory": "إضافة فئة",
+    "addUnit": "إضافة وحدة",
+    "deleteUnit": "حذف الوحده",
+    "deleteSuccess": "تم حذف الوحده بنجاح",
+    "deleteFailure": "فشل في حذف الوحده",
+    "loadingUnits": "جاري تحميل الوحدات ...",
+    "errorLoading": "خطأ في تحميل الوحده",
     "cancel": "إلغاء"
   },
   "productDetail": {
@@ -69,8 +81,10 @@
   "ProductsPage":{
     "addProduct":"إضافة منتج",
     "loadingCategories": "جارٍ تحميل الفئات...",
+    "loadingUnits": "جارٍ تحميل الوحده...",
     "search": "بحث",
     "addCategory": "إضافة فئة",
+    "addUnit": "إضافة فئة",
     "category": "فئة",
     "barcode": "باركود",
     "unit": "وحدة",
@@ -126,6 +140,7 @@
     "users": "المستخدمون",
     "products": "المنتجات",
     "categories": "الفئات",
+    "units": "الوحدات",
     "Auth": "المصادقة",
     "login": "تسجيل الدخول",
     "registerUsers": "تسجيل المستخدمين",
@@ -186,8 +201,8 @@
       "editProduct": "تعديل المنتج",
       "barcode": "باركود",
       "itemName": "اسم العنصر",
-      "unit": "وحدة",
-      "unitName2": "اسم الوحدة 2",
+      "unit": "الوحدة",
+      "unitName2": "اسم العنصر 2",
       "category": "فئة",
       "purchasePrice": "سعر الشراء",
       "salePrice": "سعر المعرض ١",
@@ -202,9 +217,11 @@
       "changeImage": "تغيير الصورة",
       "submitButton": "إضافة منتج",
       "updateButton": "تحديث المنتج",
-    "loadingCategories": "جاري تحميل الفئات..."
+    "loadingCategories": "جاري تحميل الفئات...",
+    "loadingUnits": "جاري تحميل الوحده..."
     }
-,  "categoryForm": {
+,  
+"categoryForm": {
   "categoryName": "اسم الفئة",
   "description": "الوصف",
   "products": "المنتجات",
@@ -213,7 +230,17 @@
   "categoryUpdated": "تم تحديث الفئة بنجاح!",
   "categoryCreated": "تم إنشاء الفئة بنجاح!",
   "errorSaving": "خطأ في حفظ الفئة"
-},"AdminsDashboard": {
+}
+,  
+"unitForm": {
+  "unitName": "اسم الوحده",
+  "updateUnit": "تحديث الوحده",
+  "addUnit": "إضافة وحده",
+  "unitUpdated": "تم تحديث الوحده بنجاح!",
+  "unitCreated": "تم إنشاء الوحده بنجاح!",
+  "errorSaving": "خطأ في حفظ الوحده"
+}
+,"AdminsDashboard": {
   "title": "لوحة تحكم الإداريين",
   "approve": "الموافقة",
   "delete": "حذف نهائياً",

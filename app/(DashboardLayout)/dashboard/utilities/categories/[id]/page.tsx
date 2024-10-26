@@ -17,6 +17,7 @@ import Blog from '@/app/(DashboardLayout)/components/dashboard/Blog';
 import { Spin } from 'antd';
 import CategoryForm from '@/components/forms/CategoryForm';
 import { useTranslations } from 'next-intl';
+import { getUserData } from '@/lib/actions/user.action';
 
 const fetchCategory = async (id: string) => {
   const { data } = await axios.get(`/api/categories/${id}`);
@@ -53,7 +54,10 @@ const CategoryDetailsPage = () => {
   const handleCloseEditDialog = () => {
     setOpenEditDialog(false); 
   };
-
+  const { data: userData, isLoading:isLoadinguser} = useQuery({
+    queryKey: ['userData'],
+    queryFn: () => getUserData()
+  });
   if (isLoading) {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
@@ -67,10 +71,11 @@ const CategoryDetailsPage = () => {
   }
 
   return (
-    <Box p={4}>
+    <Box p={4} gap={20}>
+        { !isLoadinguser&&userData.role==="admin"&&
       <Button variant="contained" color="primary" onClick={handleEditClick}>
         {t('edit')}
-      </Button>
+      </Button>}
 
       <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold' }}>
         {category.name}
@@ -85,12 +90,12 @@ const CategoryDetailsPage = () => {
 
       <Grid container spacing={3}>
         {category.products.length > 0 ? (
-          <Blog products={category.products} role='admin' />
+          <Blog products={category.products} role={userData.role} permissions={userData.permissions} />
         ) : (
           <Typography variant="body1">{t('noProducts')}</Typography>
         )}
       </Grid>
-
+{ !isLoadinguser&&userData.role==="admin"&&
       <Dialog open={openEditDialog} onClose={handleCloseEditDialog} fullWidth maxWidth="sm">
         <DialogTitle>{t('dialogTitle')}</DialogTitle>
         <DialogContent>
@@ -109,7 +114,7 @@ const CategoryDetailsPage = () => {
             {t('cancel')}
           </Button>
         </DialogActions>
-      </Dialog>
+      </Dialog>}
     </Box>
   );
 };

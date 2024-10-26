@@ -1,5 +1,5 @@
 "use client"
-import CategoryForm from '@/components/forms/CategoryForm'
+import UnitForm from '@/components/forms/UnitForm'
 import { getUserData } from '@/lib/actions/user.action';
 import { useQuery } from '@tanstack/react-query';
 import { notFound } from 'next/navigation';
@@ -11,7 +11,7 @@ const page = () => {
   });
   return !isLoadinguser&&userData.role==="admin"?(
     <div>
-        <CategoryForm/>
+        <UnitForm/>
     </div>
   ):notFound()
 }

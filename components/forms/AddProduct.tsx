@@ -42,6 +42,10 @@ const fetchCategories = async () => {
   const response = await axios.get("/api/categories");
   return response.data;
 };
+const fetchUnits = async () => {
+  const response = await axios.get("/api/units");
+  return response.data;
+};
 
 interface ProductFormProps {
   product?: ProductFormData2; // Optional product prop for editing
@@ -59,8 +63,11 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
   });
 
   const avatarUrl = useRef("");
-  let { startUpload } = useUploadThing("mediaPost");
   const { data: categories, isLoading } = useQuery({
+    queryKey: ["categories"],
+    queryFn: () => fetchCategories(),
+  });
+  const { data: units, isLoading:isLoading2 } = useQuery({
     queryKey: ["categories"],
     queryFn: () => fetchCategories(),
   });
@@ -91,11 +98,9 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
         const base64Data = blob.split(',')[1];
         const byteCharacters = atob(base64Data);
         const byteNumbers = new Array(byteCharacters.length);
-  
         for (let i = 0; i < byteCharacters.length; i++) {
           byteNumbers[i] = byteCharacters.charCodeAt(i);
         }
-  
         const byteArray = new Uint8Array(byteNumbers);
         const file = new File([byteArray], `${data.itemName}.jpeg`, {
           type: "image/jpeg",
@@ -196,39 +201,6 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
             />
             {errors.itemName && <span className="text-red-500">{errors.itemName.message}</span>}
           </div>
-
-          {/* Unit Select */}
-      <div>
-        <label className="block text-sm font-medium">{t('unit')}</label>
-        <Controller
-          name="unit"
-          control={control}
-          render={({ field }) => (
-            <select
-              {...field}
-              className="border border-gray-300 rounded-md p-2 w-full"
-              // placeholder={t('unit')}
-              onChange={(e)=>{field.onChange(e)
-                const selectedUnit = watch("unit");
-                // احصل على الاختصار للوحدة المختارة
-                const selectedUnitData = unitNames.find(unit => unit.name === selectedUnit);
-                const abbreviation = selectedUnitData ? selectedUnitData.abbreviation : "";
-                setabbreviation(abbreviation)
-              }}
-              
-            >
-              <option value="" selected disabled>{t('unit')}</option>
-              {unitNames.map((unit, index) => (
-                <option key={index} value={unit.name}>
-                  {unit.name}
-                </option>
-              ))}
-            </select>
-          )}
-        />
-        {errors.unit && <span className="text-red-500">{errors.unit.message}</span>}
-      </div>
-
       {/* Unit Name 2 */}
       <div>
         <label className="block text-sm font-medium">{t('unitName2')}</label>
@@ -238,7 +210,6 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
           render={({ field }) => (
             <input
               {...field}
-              value={abbreviation}
               className="border border-gray-300 rounded-md p-2 w-full"
               placeholder={t('unitName2')}
               readOnly 
@@ -247,6 +218,43 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
         />
         {errors.unitName2 && <span className="text-red-500">{errors.unitName2.message}</span>}
       </div>
+          {/* Unit Select */}
+          <div>
+            <label className="block text-sm font-medium">{t('unit')}</label>
+            <Controller
+              name="unit"
+              control={control}
+              render={({ field: { onChange, onBlur, value, ref } }) => (
+                <select
+                  onChange={(e) => {
+                    const selectedUnitId = e.target.value;
+                    const selectedUnit = categories?.find((cat: { _id: string; }) => cat._id === selectedUnitId);
+
+                    onChange(selectedUnitId); // Store the category ID
+                    // setValue("unit", selectedUnit ? selectedUnit.name : "");
+                  }}
+                  onBlur={onBlur}
+                  ref={ref}
+                  value={value}
+                  className="border border-gray-300 rounded-md p-2 w-full"
+                >
+                  <option value="">{t('unit')}</option>
+                  {isLoading ? (
+                    <option value="">{t('loadingUnits')}</option>
+                  ) : (
+                    units?.map((unit: { _id:  string ; name: string }) => (
+                      <option key={unit._id} value={unit.name}>
+                        {unit.name}
+                      </option>
+                    ))
+                  )}
+                </select>
+              )}
+            />
+            {errors.unit && <span className="text-red-500">{errors.unit.message}</span>}
+          </div>
+
+
 
           {/* Category */}
           <div>
@@ -476,10 +484,6 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
     )}
     />
 </div>
-        
-
-       
-
         <button
           type="submit"
           className="w-full bg-blue-600 text-white rounded-md py-2"
@@ -493,5 +497,3 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
 
 export default ProductForm;
 
-
- 

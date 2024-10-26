@@ -1,11 +1,12 @@
 'use client';
 
 import ProductForm from "@/components/forms/AddProduct";
+import { getUserData } from "@/lib/actions/user.action";
 import { ProductFormData2 } from "@/lib/schemas/productSchema";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useParams } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
 
 
   
@@ -22,7 +23,10 @@ import { useParams } from "next/navigation";
       queryFn: () => fetchProduct(id),
       enabled: !!id, // Ensure the barcode exists before making the request
     });
-  
+    const { data: userData, isLoading:isLoadinguser} = useQuery({
+      queryKey: ['userData'],
+      queryFn: () => getUserData()
+    });
     if (isLoading) {
       return (
         <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
@@ -40,9 +44,10 @@ import { useParams } from "next/navigation";
         </Box>
       );
     }
-  return(
+  return !isLoadinguser&&userData.role==="admin"?(
     <div className="">
         <ProductForm product={data}/>
     </div>
-  )}
+  ):notFound();
+}
   export default ProductDetailPage;

@@ -70,7 +70,7 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
             router.push("/dashboard"); 
           } else {
             console.log("user")
-            router.push("/"); 
+            router.push("/dashboard"); 
           }
         } else {
           toast.update(loadingToastId, {

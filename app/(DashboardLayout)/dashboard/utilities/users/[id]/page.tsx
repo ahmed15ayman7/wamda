@@ -9,9 +9,10 @@ import { IconUserPlus } from '@tabler/icons-react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { motion } from 'framer-motion';
-import { getUserById, updateUser } from '@/lib/actions/user.action'; // استيراد دالة تعديل اليوزر وجلب اليوزر
-import { useRouter, useParams } from 'next/navigation'; // لاستعمال بيانات الرابط
+import { getUserById, getUserData, updateUser } from '@/lib/actions/user.action'; // استيراد دالة تعديل اليوزر وجلب اليوزر
+import { useRouter, useParams, notFound } from 'next/navigation'; // لاستعمال بيانات الرابط
 import { useTranslations } from 'next-intl'; // استيراد useTranslations
+import { useQuery } from '@tanstack/react-query';
 
 const EditUserPage = ({params}:{params:{id:string}}) => {
   const { id } = params 
@@ -26,7 +27,10 @@ const EditUserPage = ({params}:{params:{id:string}}) => {
   } = useForm<UserFormData>({
     resolver: zodResolver(userSchema),
   });
-
+  const { data: userData, isLoading:isLoadinguser} = useQuery({
+    queryKey: ['userData'],
+    queryFn: () => getUserData()
+  });
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -60,7 +64,7 @@ const EditUserPage = ({params}:{params:{id:string}}) => {
     }
   };
 
-  return (
+  return !isLoadinguser &&userData.role==="admin"?(
     <Container component={motion.div} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <Box
         component="form"
@@ -168,7 +172,7 @@ const EditUserPage = ({params}:{params:{id:string}}) => {
         <ToastContainer />
       </Box>
     </Container>
-  );
+  ):notFound();
 };
 
 export default EditUserPage;

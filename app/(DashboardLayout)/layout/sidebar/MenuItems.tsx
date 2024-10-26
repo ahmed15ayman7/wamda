@@ -12,7 +12,7 @@ import {
 
 import { uniqueId } from "lodash";
 
-const Menuitems = [
+const Menuitems1 = [
   {
     navlabel: true,
     subheader: "Home",
@@ -51,7 +51,13 @@ const Menuitems = [
     icon: IconCategoryPlus, // You can choose any icon
     href: "/dashboard/utilities/categories",
   },
-  
+  {
+    id: uniqueId(),
+    title: "Units",
+    title2:"units",
+    icon: IconCategoryPlus, // You can choose any icon
+    href: "/dashboard/utilities/units",
+  },
   {
     navlabel: true,
     subheader: "Auth",
@@ -71,5 +77,51 @@ const Menuitems = [
     href: "/dashboard/utilities/users/add",
   },
 ];
+const Menuitems2 = [
+  {
+    navlabel: true,
+    subheader: "Home",
+  },
+  {
+    id: uniqueId(),
+    title: "Dashboard",
+    icon: IconLayoutDashboard,
+    title2:"Home",
+    href: "/dashboard",
+  },
+  {
+    navlabel: true,
+    subheader: "Utilities",
+  },
 
-export default Menuitems;
+  
+  {
+    id: uniqueId(),
+    title: "Products",
+    title2:"products",
+    icon: IconReceipt2, // You can choose any icon
+    href: "/dashboard/utilities/products",
+  },
+  {
+    id: uniqueId(),
+    title: "Categories",
+    title2:"categories",
+    icon: IconCategoryPlus, // You can choose any icon
+    href: "/dashboard/utilities/categories",
+  },
+
+  {
+    navlabel: true,
+    subheader: "Auth",
+  },
+  {
+    id: uniqueId(),
+    title: "Login",
+    title2:"login",
+    icon: IconLogin,
+    href: "/authentication/login",
+  },
+ 
+];
+
+export  {Menuitems1,Menuitems2};

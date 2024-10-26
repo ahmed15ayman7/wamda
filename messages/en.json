@@ -42,6 +42,7 @@
   "CategoriesPage":{
     "categories": "Categories",
     "addCategory": "Add Category",
+    "addUnit": "Add Unit",
     "viewCategory": "View Category",
     "editCategory": "Edit Category",
     "deleteCategory": "Delete Category",
@@ -50,7 +51,17 @@
     "loadingCategories": "Loading categories...",
     "errorLoading": "Error loading categories",
     "cancel": "Cancel"
-
+  },
+  "UnitsPage":{
+    "units": "Units",
+    "addCategory": "Add Category",
+    "addUnit": "Add Unit",
+    "deleteUnit": "Delete Unit",
+    "deleteSuccess": "Unit deleted successfully",
+    "deleteFailure": "Failed to delete Unit",
+    "loadingCategories": "Loading units...",
+    "errorLoading": "Error loading units",
+    "cancel": "Cancel"
   },
   "productDetail": {
     "title": "Product Details",
@@ -69,9 +80,11 @@
   },
   "ProductsPage":{
     "loadingCategories": "Loading categories...",
+    "loadingUnits": "Loading units...",
     "addProduct":"Add Product",
     "search": "Search",
     "addCategory": "Add Category",
+    "addUnit": "Add Unit",
     "category": "Category",
     "barcode": "Barcode",
     "unit": "Unit",
@@ -128,6 +141,7 @@
     "users": "Users",
     "products": "Products",
     "categories": "Categories",
+    "units": "Units",
     "Auth": "Auth",
     "login": "Login",
     "registerUsers": "Register Users",
@@ -188,7 +202,7 @@
     "barcode": "Barcode",
     "itemName": "Item Name",
     "unit": "Unit",
-    "unitName2": "Unit Name 2",
+    "unitName2": "Item Name 2",
     "category": "Category",
     "purchasePrice": "Purchase Price",
     "salePrice": "Exhibit Sale Price 1",
@@ -203,10 +217,12 @@
     "changeImage": "Change Image",
     "submitButton": "Add Product",
     "updateButton": "Update Product",
-    "loadingCategories": "Loading categories..."
+    "loadingCategories": "Loading categories...",
+    "loadingUnits": "Loading units..."
 
   }
-, "categoryForm": {
+,
+ "categoryForm": {
   "categoryName": "Category Name",
   "description": "Description",
   "products": "Products",
@@ -215,7 +231,16 @@
   "categoryUpdated": "Category updated successfully!",
   "categoryCreated": "Category created successfully!",
   "errorSaving": "Error saving category"
-}  ,"AdminsDashboard": {
+}  ,
+ "unitForm": {
+  "unitName": "Unit Name",
+  "updateUnit": "Update Unit",
+  "addUnit": "Add Unit",
+  "unitUpdated": "Unit updated successfully!",
+  "unitCreated": "Unit created successfully!",
+  "errorSaving": "Error saving unit"
+}  
+,"AdminsDashboard": {
   "title": "Admins Dashboard",
   "approve": "Approve",
   "delete": "Delete",

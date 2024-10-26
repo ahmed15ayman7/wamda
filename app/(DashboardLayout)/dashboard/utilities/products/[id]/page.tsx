@@ -23,6 +23,7 @@ import { toast } from 'react-toastify';
 import { IconBasket } from '@tabler/icons-react';
 import Link from 'next/link'; // Import Link from Next.js
 import { useTranslations } from 'next-intl';
+import { getUserData } from '@/lib/actions/user.action';
 
 interface Product {
   _id: string;
@@ -50,14 +51,17 @@ const fetchProduct = async (id: string): Promise<Product> => {
 const ProductDetailPage = () => {
   const { id } = useParams<{ id: string }>();
   const t = useTranslations('productDetail'); // استخدام 'productDetail' للحصول على الترجمة
-  
+  const { data: userData, isLoading:isLoadinguser} = useQuery({
+    queryKey: ['userData'],
+    queryFn: () => getUserData()
+  });
   const { data, isLoading, isError } = useQuery({ 
     queryKey: ['product', id],
     queryFn: () => fetchProduct(id),
     enabled: !!id, // Ensure the barcode exists before making the request
   });
 
-  if (isLoading) {
+  if (isLoading || isLoadinguser) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
         <CircularProgress />
@@ -132,16 +136,18 @@ const ProductDetailPage = () => {
               <Rating value={data.rating} readOnly />
             </Tooltip>
 
-            {/* Edit Product Button */}
+            {
+              userData.role==="admin"&&
             <Button
-              variant="contained"
-              color="primary"
-              component={Link} // Use Link for navigation
-              href={`/dashboard/utilities/products/edit/${data._id}`} // Link to edit page
-              startIcon={<IconBasket />}
+            variant="contained"
+            color="primary"
+            component={Link} // Use Link for navigation
+            href={`/dashboard/utilities/products/edit/${data._id}`} // Link to edit page
+            startIcon={<IconBasket />}
             >
               {t('editProduct')}
             </Button>
+            }
           </Stack>
         </Grid>
       </Grid>

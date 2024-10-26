@@ -9,7 +9,7 @@ export default function RootLayout({
 }>) {
   return (
 <div className="">
-<Header/>
+{/* <Header/> */}
 <div className="lg:p-9 p-3">
 
         {children}

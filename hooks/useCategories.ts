@@ -9,3 +9,11 @@ const fetchCategories = async () => {
 export const useCategories = () => {
   return useQuery({queryKey:['categories'],queryFn:()=> fetchCategories()});
 };
+const fetchUnits = async () => {
+  const { data } = await axios.get('/api/units');
+  return data;
+};
+
+export const useUnits = () => {
+  return useQuery({queryKey:['units'],queryFn:()=> fetchUnits()});
+};
