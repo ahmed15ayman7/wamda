@@ -13,15 +13,13 @@ const UsersPage = () => {
     queryFn: () => getUserData()
   });
   
-  return !isLoadinguser&&userData.role==="admin" ?(
+  return (
     <div>
-     
       {/* AdminsDashboard component */}
       {/* <AdminsDashboard /> */}
-      
       <UserTable/>
     </div>
-  ):notFound();
+  )
 };
 
 export default UsersPage;
