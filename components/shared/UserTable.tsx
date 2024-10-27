@@ -155,9 +155,7 @@ const UserTable = () => {
               >
                 <MenuItem value="">{t('all')}</MenuItem>
                 <MenuItem value="admin">{t('admin')}</MenuItem>
-                <MenuItem value="wholesale1">{t('wholesale1')}</MenuItem>
-                <MenuItem value="wholesale2">{t('wholesale2')}</MenuItem>
-                <MenuItem value="retail">{t('retail')}</MenuItem>
+                <MenuItem value="retail">{t('user')}</MenuItem>
               </Select>
             </FormControl>
           </div>

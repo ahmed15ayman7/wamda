@@ -46,7 +46,7 @@ const CategoriesTimeline = ({ categories }: { categories: { _id: string; name: s
               {t('product_count', { count: category.products.length })}
             </TimelineOppositeContent>
             <TimelineSeparator>
-              <TimelineDot color={category.color as ("primary" | "secondary" | "success" | "warning" | "error" | "inherit" | "grey" | "info")} variant="outlined" />
+              <TimelineDot color={"success"} variant="outlined" />
               {index < categoryDetails.length - 1 && <TimelineConnector />}
             </TimelineSeparator>
             <TimelineContent>

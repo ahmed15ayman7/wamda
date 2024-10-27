@@ -9,7 +9,7 @@ interface LanguageState {
 }
 
 const useStore = create<LanguageState>((set) => ({
-  language: 'ar',
+  language: 'en',
   setLanguage: (lang: "ar"|"en") => {
     if (typeof window !== 'undefined') { 
       localStorage.setItem('language', lang);
