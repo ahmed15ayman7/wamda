@@ -64,7 +64,7 @@ const EditUserPage = ({params}:{params:{id:string}}) => {
     }
   };
 
-  return !isLoadinguser &&userData.role==="admin"?(
+  return (
     <Container component={motion.div} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <Box
         component="form"
@@ -172,7 +172,7 @@ const EditUserPage = ({params}:{params:{id:string}}) => {
         <ToastContainer />
       </Box>
     </Container>
-  ):notFound();
+  );
 };
 
 export default EditUserPage;

@@ -44,10 +44,10 @@ import { notFound, useParams } from "next/navigation";
         </Box>
       );
     }
-  return !isLoadinguser&&userData.role==="admin"?(
+  return (
     <div className="">
         <ProductForm product={data}/>
     </div>
-  ):notFound();
+  );
 }
   export default ProductDetailPage;

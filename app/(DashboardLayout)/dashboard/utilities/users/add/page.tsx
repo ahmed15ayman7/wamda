@@ -65,7 +65,7 @@ const AddUserPage: React.FC = () => {
     }
   };
 
-  return !isLoadinguser&& userData.role==="admin"?(
+  return (
     <Container component={motion.div} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <Box
         component="form"
@@ -226,7 +226,7 @@ const AddUserPage: React.FC = () => {
         <ToastContainer />
       </Box>
     </Container>
-  ):notFound();
+  )
 };
 
 export default AddUserPage;

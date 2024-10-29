@@ -9,11 +9,11 @@ const page = () => {
     queryKey: ['userData'],
     queryFn: () => getUserData()
   });
-  return !isLoadinguser&&userData.role==="admin"?(
+  return (
     <div>
         <UnitForm/>
     </div>
-  ):notFound()
+  )
 }
 
 export default page
