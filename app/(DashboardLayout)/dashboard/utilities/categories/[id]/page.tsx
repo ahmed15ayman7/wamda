@@ -44,8 +44,8 @@ const CategoryDetailsPage = () => {
     enabled: !!id,
   });
 
-  const t = useTranslations('categoryDetails'); // استخدام 'categoryDetails' للحصول على الترجمة
-
+  const t = useTranslations('categoryDetails');
+  
   const handleEditClick = () => {
     setEditedCategory({ name: category.name, description: category.description || '' });
     setOpenEditDialog(true);
