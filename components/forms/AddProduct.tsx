@@ -211,8 +211,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
             <input
               {...field}
               className="border border-gray-300 rounded-md p-2 w-full"
-              placeholder={t('unitName2')}
-              readOnly 
+              placeholder={t('unitName2')} 
             />
           )}
         />
