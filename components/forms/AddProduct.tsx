@@ -88,7 +88,6 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
 
   const handleFormSubmit = async (data: ProductFormData2) => {
     const toastId = toast.loading("Saving product..."); // Start loading toast
-    console.log(data);
   
     try {
       let uploadedImage;
@@ -116,7 +115,6 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
   
       const payload = {
         ...data,
-        unitName2: abbreviation,
         productImage: uploadedImage, // Store the Firebase URL in the database
       };
   
@@ -135,6 +133,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
           console.log(payload);
         }
       } else {
+        console.log(payload);
         if (uploadedImage) {
           await axios.post("/api/products", payload);
           toast.update(toastId, {
