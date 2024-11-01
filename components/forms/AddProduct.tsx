@@ -68,8 +68,8 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
     queryFn: () => fetchCategories(),
   });
   const { data: units, isLoading:isLoading2 } = useQuery({
-    queryKey: ["categories"],
-    queryFn: () => fetchCategories(),
+    queryKey: ["units"],
+    queryFn: () => fetchUnits(),
   });
 
   useEffect(() => {
