@@ -163,10 +163,10 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
 
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-lg">
+    <div className="max-sm:max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-lg">
       <h2 className="text-2xl font-bold mb-4">{product ? t('editProduct') : t('addNewProduct')}</h2>
       <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4">
-        <div className="grid grid-cols-2 max-sm:grid-cols-1 gap-4">
+        <div className="grid grid-cols-3 max-sm:grid-cols-1 gap-4">
           {/* Barcode */}
           <div>
             <label className="block text-sm font-medium">{t('barcode')}</label>
