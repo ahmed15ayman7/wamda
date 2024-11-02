@@ -36,7 +36,7 @@ useEffect(() => {
 
 
   return (
-    <Box>
+    <Box >
       <IconButton
         size="large"
         aria-label="show profile options"
@@ -66,6 +66,7 @@ useEffect(() => {
         id="profile-menu"
         anchorEl={anchorEl2}
         keepMounted
+        className="bg-black/40"
         open={Boolean(anchorEl2)}
         onClose={handleClose2}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
@@ -73,18 +74,19 @@ useEffect(() => {
         sx={{
           "& .MuiMenu-paper": {
             width: "200px",
+            background:"#00000060"
           },
         }}
       >
         <MenuItem>
           <ListItemIcon>
-            <IconUser width={20} />
+            <IconUser width={20} color={"white"} />
           </ListItemIcon>
           <ListItemText primary={userName} /> {/* Display user name */}
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
-            <IconMail width={20} />
+            <IconMail width={20} color={"white"} />
           </ListItemIcon>
           <ListItemText primary={userEmail} /> {/* Display user email */}
         </MenuItem>
@@ -92,7 +94,7 @@ useEffect(() => {
           <Button
             href="/authentication/login"
             variant="outlined"
-            color="primary"
+            className="bg-[#ffffff] hover:bg-[#ffffff90] text-gray-900 font-bold border-gray-900 border shadow-md cursor-pointer"
             component={Link}
             fullWidth
           >

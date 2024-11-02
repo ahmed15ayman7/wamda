@@ -140,7 +140,7 @@ const ProductDetailPage = () => {
               userData.role==="admin"&&
             <Button
             variant="contained"
-            className='bg-[#7ebe4b] hover:bg-[#7ebe4b90]'
+            className='bg-[#ffffff] hover:bg-[#ffffff90] text-gray-900 font-bold border-gray-900 border shadow-md cursor-pointer'
             component={Link} // Use Link for navigation
             href={`/dashboard/utilities/products/edit/${data._id}`} // Link to edit page
             startIcon={<IconEdit />}

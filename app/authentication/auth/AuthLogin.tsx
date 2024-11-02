@@ -174,7 +174,7 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
         </Stack>
         <Box>
           <Button
-            className='bg-[#7ebe4b] hover:bg-[#7ebe4b90]'
+            className='bg-[#ffffff] hover:bg-[#ffffff90] text-gray-900 font-bold border-gray-900 border shadow-md cursor-pointer'
             variant="contained"
             size="large"
             fullWidth

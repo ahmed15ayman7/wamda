@@ -82,7 +82,7 @@ const CategoriesPage = () => {
             <Link href="/dashboard/utilities/categories/add" passHref>
               <Button
                 variant="contained"
-                className='bg-[#7ebe4b] hover:bg-[#7ebe4b90]'
+                className='bg-[#ffffff] hover:bg-[#ffffff90] text-gray-900 font-bold border-gray-900 border shadow-md cursor-pointer'
                 startIcon={<IconPlus />}
                 component={motion.div}
                 whileHover={{ scale: 1.1 }}
@@ -96,7 +96,7 @@ const CategoriesPage = () => {
             <Link href="/dashboard/utilities/units/add" passHref>
               <Button
                 variant="contained"
-                className='bg-[#7ebe4b] hover:bg-[#7ebe4b90]'
+                className='bg-[#ffffff] hover:bg-[#ffffff90] text-gray-900 font-bold border-gray-900 border shadow-md cursor-pointer'
                 startIcon={<IconPlus />}
                 component={motion.div}
                 whileHover={{ scale: 1.1 }}

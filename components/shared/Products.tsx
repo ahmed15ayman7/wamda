@@ -186,7 +186,7 @@ const Products = ({ refetch }: { refetch: () => void }) => {
 
   return (
     <div>
-      <Button variant="contained" className='flex gap-4 bg-[#7ebe4b] hover:bg-[#7ebe4b90]' onClick={handleToggleDialog} startIcon={<IconUpload size={24} />}>
+      <Button variant="contained" className='flex gap-4 bg-[#ffffff] hover:bg-[#ffffff90] text-gray-900 font-bold border-gray-900 border shadow-md cursor-pointer' onClick={handleToggleDialog} startIcon={<IconUpload size={24} />}>
         {t('uploadExcelFile')}
       </Button>
 

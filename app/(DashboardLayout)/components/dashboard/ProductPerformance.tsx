@@ -104,7 +104,7 @@ const ProductPerformance: React.FC<ProductPerformanceProps> = ({ userData }) => 
             <Box mt={2} display="flex" justifyContent="flex-end">
                 <Button
                     variant="contained"
-                    className="bg-[#7ebe4b] hover:bg-[#7ebe4b90]"
+                    className="bg-[#ffffff] hover:bg-[#ffffff90] text-gray-900 font-bold border-gray-900 border shadow-md cursor-pointer"
                     onClick={() => router.push('/dashboard/utilities/users')}
                 >
                      {t('showMore')}

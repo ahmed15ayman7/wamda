@@ -12,6 +12,7 @@ import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import useStore from '@/hooks/zustand';
 import { getUserData } from '@/lib/actions/user.action';
+import ProductsTable from '@/components/shared/productsTable';
 
 const ProductsPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -110,7 +111,7 @@ const ProductsPage = () => {
                 variant="contained"
                 color="primary"
                 startIcon={<IconPlus />}
-                className='flex gap-4 bg-[#7ebe4b] hover:bg-[#7ebe4b90]'
+                className='flex gap-4 bg-[#ffffff] hover:bg-[#ffffff90] text-gray-900 font-bold border-gray-900 border shadow-md cursor-pointer'
                 component={motion.div}
                 whileHover={{ scale: 1.1 }}
                 >
@@ -125,7 +126,7 @@ const ProductsPage = () => {
           <Tooltip title="Add a new product" arrow>
             <Link href="/dashboard/utilities/products/add" passHref>
               <Button variant="contained" 
-                              className='flex gap-4 bg-[#7ebe4b] hover:bg-[#7ebe4b90]'
+                              className='flex gap-4 bg-[#ffffff] hover:bg-[#ffffff90] text-gray-900 font-bold border-gray-900 border shadow-md cursor-pointer'
                            startIcon={<IconLayoutGridAdd />}>
                 {t('addProduct')}
               </Button>
@@ -258,7 +259,7 @@ const ProductsPage = () => {
             <Link href="/dashboard/utilities/units/add" passHref>
               <Button
                 variant="contained"
-                className='bg-[#7ebe4b] hover:bg-[#7ebe4b90]'
+                className='bg-[#ffffff] hover:bg-[#ffffff90] text-gray-900 font-bold border-gray-900 border shadow-md cursor-pointer'
                 startIcon={<IconPlus />}
                 component={motion.div}
                 whileHover={{ scale: 1.1 }}
@@ -270,10 +271,11 @@ const ProductsPage = () => {
       </Box>
 
 
+      {!isLoading &&  <ProductsTable products={products.products} setCurrentPage={setCurrentPage} total={products?.totalPages}/>}
         {/* <ProductPriceSelector /> */}
       <Box sx={{ display: 'flex', justifyContent: 'center', my: 2 }}>
         <Pagination
-          count={Math.ceil(products?.total / pageSize)} // Assuming you have total products count from API
+          count={Math.ceil(products?.totalPages / pageSize)} // Assuming you have total products count from API
           page={currentPage}
           onChange={(event, value) => setCurrentPage(value)}
           color="primary"
@@ -281,7 +283,6 @@ const ProductsPage = () => {
           shape="rounded"
         />
       </Box>
-
       {isLoading && (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '20vh' }}>
           <Spin size="large" />

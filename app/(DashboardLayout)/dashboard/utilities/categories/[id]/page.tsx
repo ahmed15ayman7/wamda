@@ -74,7 +74,7 @@ const CategoryDetailsPage = () => {
     <Box p={4} className="flex flex-col gap-4 bg-black/40 rounded-lg">
         { !isLoadinguser&&userData.role==="admin"&&
       <Button variant="contained" 
-      className='bg-[#7ebe4b] hover:bg-[#7ebe4b90]'
+      className='bg-[#ffffff] hover:bg-[#ffffff90] text-gray-900 font-bold border-gray-900 border shadow-md cursor-pointer'
       onClick={handleEditClick}>
         {t('edit')}
       </Button>}

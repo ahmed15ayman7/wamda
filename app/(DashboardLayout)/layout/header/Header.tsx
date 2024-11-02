@@ -51,7 +51,7 @@ const Header = ({toggleMobileSidebar}: ItemType) => {
   }));
 
   return (
-    <AppBarStyled position="sticky" className=' bg-transparent' color="default">
+    <AppBarStyled position="sticky" className=' bg-white/90' color="default">
       <ToolbarStyled>
         <IconButton
           color="inherit"
@@ -77,12 +77,17 @@ const Header = ({toggleMobileSidebar}: ItemType) => {
             )}
           </IconButton>
         </Stack>
-        <Box flexGrow={1} />
+
+        <Box flexGrow={1} className={"flex justify-center  max-sm:hidden"} >
+          <h1 className=" bg-gradient-to-b from-black from-50% via-white to-60% to-black font-bold text-[40px] max-sm:hidden  text-transparent bg-clip-text">خاص بمؤسسة ومضه الأناره التجاريه و فروعها</h1>
+        </Box>
         <Stack spacing={1} direction="row" alignItems="center">
-          <Button variant="contained" component={Link} href="/authentication/login"   disableElevation                 className='bg-[#7ebe4b] hover:bg-[#7ebe4b90]'
+          <div className=" bg-gradient-to-b from-black via-white to-black rounded-sm">
+          <Button variant="contained" component={Link} href="/authentication/login"   disableElevation className='w-full h-full bg-black/40 font-bold'
  >
             Login
           </Button>
+    </div>
           <Profile />
         </Stack>
       </ToolbarStyled>

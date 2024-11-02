@@ -140,7 +140,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ categoryData, onSuccess }) 
         {/* Submit Button */}
         <Button
           variant="contained"
-          className='bg-[#7ebe4b] hover:bg-[#7ebe4b90]'
+          className='bg-[#ffffff] hover:bg-[#ffffff90] text-gray-900 font-bold border-gray-900 border shadow-md cursor-pointer'
           startIcon={<IconPlus />}
           type="submit"
           fullWidth
