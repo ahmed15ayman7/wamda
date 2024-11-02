@@ -109,9 +109,9 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
 
       {subtext}
 
-      <form onSubmit={handleSubmit(handleLogin)}>
+      <form onSubmit={handleSubmit(handleLogin)} >
         <Stack>
-          <Box>
+          <Box >
             <Typography
               variant="subtitle1"
               fontWeight={600}
@@ -174,13 +174,13 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
         </Stack>
         <Box>
           <Button
-            color="primary"
+            className='bg-[#7ebe4b] hover:bg-[#7ebe4b90]'
             variant="contained"
             size="large"
             fullWidth
             type="submit"
           >
-            Sign In
+            Login
           </Button>
         </Box>
       </form>

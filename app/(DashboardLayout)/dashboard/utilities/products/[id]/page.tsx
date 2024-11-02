@@ -20,7 +20,7 @@ import {
 } from '@mui/material';
 import { motion } from 'framer-motion';
 import { toast } from 'react-toastify';
-import { IconBasket } from '@tabler/icons-react';
+import { IconEdit } from '@tabler/icons-react';
 import Link from 'next/link'; // Import Link from Next.js
 import { useTranslations } from 'next-intl';
 import { getUserData } from '@/lib/actions/user.action';
@@ -80,7 +80,7 @@ const ProductDetailPage = () => {
   }
 
   return (
-    <Container component={motion.div} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+    <Container component={motion.div} className="bg-black/40 px-3 py-5 rounded-lg" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <Grid container spacing={4} mt={4}>
         {/* Product Image */}
         <Grid item xs={12} md={6}>
@@ -132,18 +132,18 @@ const ProductDetailPage = () => {
             </Typography>
             
             {/* Product Rating */}
-            <Tooltip title={`Rating: ${data.rating} stars`} arrow>
+            {/* <Tooltip title={`Rating: ${data.rating} stars`} arrow>
               <Rating value={data.rating} readOnly />
-            </Tooltip>
+            </Tooltip> */}
 
             {
               userData.role==="admin"&&
             <Button
             variant="contained"
-            color="primary"
+            className='bg-[#7ebe4b] hover:bg-[#7ebe4b90]'
             component={Link} // Use Link for navigation
             href={`/dashboard/utilities/products/edit/${data._id}`} // Link to edit page
-            startIcon={<IconBasket />}
+            startIcon={<IconEdit />}
             >
               {t('editProduct')}
             </Button>

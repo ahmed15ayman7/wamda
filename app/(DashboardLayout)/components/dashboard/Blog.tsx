@@ -46,7 +46,7 @@ const Blog = ({ products, role, permissions }: { products: ProductFormData[], ro
     <Grid container spacing={3}>
       {products.map((product: ProductFormData) => (
         <Grid item xs={12} md={4} lg={3} key={product.barcode}>
-          <BlankCard>
+          <BlankCard className='bg-black/20'>
             <Tooltip title={t('tooltip_product_details')} arrow>
               <Typography component={Link} href={`${role === "admin" ? '/dashboard/utilities' : ''}/products/${product._id}`}>
                 <Avatar
@@ -59,7 +59,7 @@ const Blog = ({ products, role, permissions }: { products: ProductFormData[], ro
                 />
               </Typography>
             </Tooltip>
-            <CardContent sx={{ p: 3, pt: 2 }}>
+            <CardContent sx={{ p: 3, pt: 2 }} className='bg-black/20' >
               <Tooltip title={`${t('product_name')}: ${product.itemName}`} arrow>
                 <Typography variant="h6">{product.itemName}</Typography>
               </Tooltip>

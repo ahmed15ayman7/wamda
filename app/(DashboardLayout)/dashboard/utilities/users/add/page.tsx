@@ -66,7 +66,7 @@ const AddUserPage: React.FC = () => {
   };
 
   return (
-    <Container component={motion.div} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+    <Container  component={motion.div} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <Box
         component="form"
         onSubmit={handleSubmit(onSubmit)}
@@ -80,6 +80,7 @@ const AddUserPage: React.FC = () => {
           p: 3,
           boxShadow: 3,
         }}
+        className="bg-black/40 px-3 py-5 rounded-lg"
       >
         <h2>{t('addUser')}</h2>
 
@@ -149,8 +150,8 @@ const AddUserPage: React.FC = () => {
                 variant="outlined"
                 fullWidth
               >
-                <MenuItem value="admin">{t('admin')}</MenuItem>
-                <MenuItem value="user">{t('user')}</MenuItem>
+                <MenuItem value="admin" className="text-black">{t('admin')}</MenuItem>
+                <MenuItem value="user" className="text-black">{t('user')}</MenuItem>
               </TextField>
             )}
           />
@@ -215,7 +216,7 @@ const AddUserPage: React.FC = () => {
           <Button
             type="submit"
             variant="contained"
-            color="primary"
+            className='bg-[#7ebe4b] hover:bg-[#7ebe4b90]'
             startIcon={<IconUserPlus />}
             sx={{ mt: 2 }}
           >

@@ -48,7 +48,7 @@ export default function RootLayout({
       {/* ------------------------------------------- */}
       {/* Main Wrapper */}
       {/* ------------------------------------------- */}
-      <PageWrapper className="page-wrapper">
+      <PageWrapper className="page-wrapper bg-gradient-to-b from-black via-white to-black bg-fixed">
         {/* ------------------------------------------- */}
         {/* Header */}
         {/* ------------------------------------------- */}
@@ -61,12 +61,13 @@ export default function RootLayout({
             paddingTop: "20px",
             maxWidth: "1200px",
           }}
+          className=""
         >
           {/* ------------------------------------------- */}
           {/* Page Route */}
           {/* ------------------------------------------- */}
-          <Box sx={{ minHeight: "calc(100vh - 170px)" }} > 
-          <div className="w-full h-full">
+          <Box  sx={{ minHeight: "calc(100vh - 170px)" }} > 
+          <div className="w-full h-full ">
           {children}
           </div>
           </Box>

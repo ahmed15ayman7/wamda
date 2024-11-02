@@ -51,7 +51,7 @@ const Header = ({toggleMobileSidebar}: ItemType) => {
   }));
 
   return (
-    <AppBarStyled position="sticky" color="default">
+    <AppBarStyled position="sticky" className=' bg-transparent' color="default">
       <ToolbarStyled>
         <IconButton
           color="inherit"
@@ -79,7 +79,8 @@ const Header = ({toggleMobileSidebar}: ItemType) => {
         </Stack>
         <Box flexGrow={1} />
         <Stack spacing={1} direction="row" alignItems="center">
-          <Button variant="contained" component={Link} href="/authentication/login"   disableElevation color="primary" >
+          <Button variant="contained" component={Link} href="/authentication/login"   disableElevation                 className='bg-[#7ebe4b] hover:bg-[#7ebe4b90]'
+ >
             Login
           </Button>
           <Profile />

@@ -33,7 +33,7 @@ const ProductAnalysis: React.FC<ProductAnalysisProps> = ({
       },
       height: 155,
     },
-    colors: [primary, primarylight, '#F9F9FD'],
+    colors: ["#7ebe4b", "#12117e", '#F9F9FD'],
     plotOptions: {
       pie: {
         startAngle: 0,
@@ -45,7 +45,7 @@ const ProductAnalysis: React.FC<ProductAnalysisProps> = ({
       },
     },
     tooltip: {
-      theme: theme.palette.mode === 'dark' ? 'dark' : 'light',
+      theme: 'dark' ,
       fillSeriesColor: false,
     },
     stroke: {
@@ -57,6 +57,7 @@ const ProductAnalysis: React.FC<ProductAnalysisProps> = ({
     legend: {
       show: false,
     },
+    labels: [t("products"),t("categories"),t("users")],
     responsive: [
       {
         breakpoint: 991,

@@ -75,14 +75,14 @@ const CategoriesPage = () => {
     <Box p={4}>
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Typography variant="h4" gutterBottom>
-          {t('units')} {/* Use translation for the title */}
+          {t('units')} 
         </Typography>
         {!isLoadinguser && userData.role === "admin" &&
           <Tooltip title={t('addCategory')} arrow>
             <Link href="/dashboard/utilities/categories/add" passHref>
               <Button
                 variant="contained"
-                color="primary"
+                className='bg-[#7ebe4b] hover:bg-[#7ebe4b90]'
                 startIcon={<IconPlus />}
                 component={motion.div}
                 whileHover={{ scale: 1.1 }}
@@ -96,12 +96,12 @@ const CategoriesPage = () => {
             <Link href="/dashboard/utilities/units/add" passHref>
               <Button
                 variant="contained"
-                color="primary"
+                className='bg-[#7ebe4b] hover:bg-[#7ebe4b90]'
                 startIcon={<IconPlus />}
                 component={motion.div}
                 whileHover={{ scale: 1.1 }}
               >
-                {t('addUnit')} {/* Use translation for the button */}
+                {t('addUnit')} 
               </Button>
             </Link>
           </Tooltip>}
@@ -110,13 +110,13 @@ const CategoriesPage = () => {
         {data?.map((category: any) => (
           <Grid item xs={12} sm={6} md={4} key={category._id}>
             <motion.div whileHover={{ scale: 1.05 }}>
-              <Card>
+              <Card className="bg-black/40 px-3 py-5 rounded-lg">
                 <CardContent>
                   <Typography variant="h6">{category.name}</Typography>
                     {!isLoadinguser && userData.role === "admin" &&
                   <Box mt={2} display="flex" justifyContent="space-between" alignItems="center">
                       <Tooltip title={t('deleteUnit')} arrow>
-                        <IconButton onClick={() => handleDelete(category._id)}>
+                        <IconButton color={"error"} onClick={() => handleDelete(category._id)}>
                           <IconTrash />
                         </IconButton>
                       </Tooltip>

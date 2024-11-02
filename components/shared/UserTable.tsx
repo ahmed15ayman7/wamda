@@ -112,7 +112,7 @@ const UserTable = () => {
   }
 
   return (
-    <Container component={motion.div} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+    <Container component={motion.div} className="bg-black/40 py-5 rounded-lg " initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <Box sx={{ mt: 4 }}>
         <h2>{t('userList')}</h2>
 
@@ -164,7 +164,7 @@ const UserTable = () => {
               <Link href="/dashboard/utilities/users/add" passHref>
                 <Button
                   variant="contained"
-                  color="primary"
+                  className='bg-[#7ebe4b] hover:bg-[#7ebe4b90]'
                   startIcon={<IconUserPlus />}
                 >
                   {t('addUser')}
@@ -192,12 +192,13 @@ const UserTable = () => {
                 <TableCell>{user.role}</TableCell>
                 <TableCell>
                   <Tooltip title={t('editUser')} arrow>
-                    <IconButton onClick={() => handleUpdate(user)} color="primary">
+                    <IconButton onClick={() => handleUpdate(user)}  className='text-[#12117e] hover:text-[#12117e90]'
+>
                       <IconEdit />
                     </IconButton>
                   </Tooltip>
                   <Tooltip title={t('deleteUser')} arrow>
-                    <IconButton onClick={() => handleDelete(user._id)} color="secondary">
+                    <IconButton onClick={() => handleDelete(user._id)} color="error">
                       <IconTrash />
                     </IconButton>
                   </Tooltip>

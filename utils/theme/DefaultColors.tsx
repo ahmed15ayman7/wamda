@@ -54,8 +54,8 @@ const baselightTheme = createTheme({
       600: "#2A3547",
     },
     text: {
-      primary: "#2A3547",
-      secondary: "#5A6A85",
+      primary: "#FFFFFFFF",
+      secondary: "#EAF0FCFF",
     },
     action: {
       disabledBackground: "rgba(73,82,88,0.12)",

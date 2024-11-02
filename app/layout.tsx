@@ -30,7 +30,7 @@ export default function RootLayout({
     <InfintyProvider>
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gradient-to-b from-black via-white to-black bg-fixed`}
         dir={getLang()==="ar"?"rtl":"ltr"}
         >
         <ThemeProvider theme={baselightTheme}>

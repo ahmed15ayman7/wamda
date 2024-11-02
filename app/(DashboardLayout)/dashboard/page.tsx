@@ -61,7 +61,7 @@ const Dashboard = () => {
             <Link href="/dashboard/utilities/units/add" passHref>
               <Button
                 variant="contained"
-                color="primary"
+                className='bg-[#7ebe4b] hover:bg-[#7ebe4b90]'
                 startIcon={<IconPlus />}
                 component={motion.div}
                 whileHover={{ scale: 1.1 }}
@@ -74,9 +74,8 @@ const Dashboard = () => {
             <Link href="/dashboard/utilities/categories/add" passHref>
               <Button
                 variant="contained"
-                color="primary"
                 startIcon={<IconPlus />}
-                className='flex gap-4'
+                className='flex gap-4 bg-[#7ebe4b] hover:bg-[#7ebe4b90]'
                 
                 component={motion.div}
                 whileHover={{ scale: 1.1 }}
@@ -89,7 +88,9 @@ const Dashboard = () => {
           <Products refetch={()=>{}} />
           <Tooltip title="Add a new product" arrow>
             <Link href="/dashboard/utilities/products/add" passHref>
-              <Button variant="contained" color="primary" className='flex gap-4' startIcon={<IconLayoutGridAdd />}>
+              <Button variant="contained" 
+                className='flex gap-4 bg-[#7ebe4b] hover:bg-[#7ebe4b90]'
+             startIcon={<IconLayoutGridAdd />}>
                 {t('addProduct')}
               </Button>
             </Link>

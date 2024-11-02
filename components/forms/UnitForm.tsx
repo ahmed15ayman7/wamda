@@ -74,6 +74,7 @@ const UnitForm: React.FC<UnitFormProps> = ({ unitData, onSuccess }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
+      className="bg-black/40 px-3 py-5 rounded-lg"
     >
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 py-5">
         {/* Unit Name */}
@@ -89,7 +90,7 @@ const UnitForm: React.FC<UnitFormProps> = ({ unitData, onSuccess }) => {
         {/* Submit Button */}
         <Button
           variant="contained"
-          color="primary"
+          className='bg-[#7ebe4b] hover:bg-[#7ebe4b90]'
           startIcon={<IconPlus />}
           type="submit"
           fullWidth

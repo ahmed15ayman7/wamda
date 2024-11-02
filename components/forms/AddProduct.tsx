@@ -163,7 +163,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
 
 
   return (
-    <div className="max-sm:max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-lg">
+    <div className="max-sm:max-w-2xl mx-auto p-6 bg-black/20 shadow-lg rounded-lg">
       <h2 className="text-2xl font-bold mb-4">{product ? t('editProduct') : t('addNewProduct')}</h2>
       <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4">
         <div className="grid grid-cols-3 max-sm:grid-cols-1 gap-4">
@@ -440,7 +440,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
   <div className="mb-4 relative">
 
   <button
-    className="flex items-center gap-3 -bottom-3 left-0 right-0 m-auto w-fit p-[.35rem] rounded-full border  bg-[#5D87FF] text-white px-5 hover:bg-[#5D87FF90] transition"
+    className="flex items-center gap-3 -bottom-3 left-0 right-0 m-auto w-fit p-[.35rem] rounded-full border  bg-[#12117e] text-white px-5 hover:bg-[#12117e90] transition"
     title="Change photo"
     onClick={(e) => {
       e.preventDefault();
@@ -457,7 +457,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
         <Dialog open={isDialogOpen} onClose={() => setIsDialogOpen(false)} className="relative z-[10000]">
           <div className="fixed inset-0  bg-opacity-50" />
           <div className="fixed inset-0 flex items-center justify-center p-4">
-            <Dialog.Panel className="bg-white p-6 rounded-lg">
+            <Dialog.Panel className="bg-transparent p-6 rounded-lg">
               <Modal updateAvatar={(imgSrc) => {
                 field.onChange(imgSrc);
                 updateAvatar(imgSrc);
@@ -484,7 +484,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
 </div>
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white rounded-md py-2"
+          className="w-full bg-[#618c3e] hover:bg-[#7ebe4b90] text-white rounded-md py-2"
         >
           {product ? t('updateButton') : t('submitButton')}
         </button>

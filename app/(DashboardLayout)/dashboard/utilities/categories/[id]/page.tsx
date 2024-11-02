@@ -71,16 +71,18 @@ const CategoryDetailsPage = () => {
   }
 
   return (
-    <Box p={4} gap={20}>
+    <Box p={4} className="flex flex-col gap-4 bg-black/40 rounded-lg">
         { !isLoadinguser&&userData.role==="admin"&&
-      <Button variant="contained" color="primary" onClick={handleEditClick}>
+      <Button variant="contained" 
+      className='bg-[#7ebe4b] hover:bg-[#7ebe4b90]'
+      onClick={handleEditClick}>
         {t('edit')}
       </Button>}
 
       <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold' }}>
         {category.name}
       </Typography>
-      <Typography variant="subtitle1" gutterBottom sx={{ fontStyle: 'italic', color: 'gray' }}>
+      <Typography variant="subtitle1" gutterBottom sx={{ fontStyle: 'italic', color: '#eeeeee' }}>
         {category.description || t('noDescription')}
       </Typography>
 
@@ -88,7 +90,7 @@ const CategoryDetailsPage = () => {
         {t('products')}
       </Typography>
 
-      <Grid container spacing={3}>
+      <Grid container spacing={3} className="mt-5">
         {category.products.length > 0 ? (
           <Blog products={category.products} role={userData.role} permissions={userData.permissions} />
         ) : (

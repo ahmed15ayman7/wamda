@@ -46,12 +46,12 @@ const CategoriesTimeline = ({ categories }: { categories: { _id: string; name: s
               {t('product_count', { count: category.products.length })}
             </TimelineOppositeContent>
             <TimelineSeparator>
-              <TimelineDot color={"success"} variant="outlined" />
+              <TimelineDot color={"warning"} variant="outlined" />
               {index < categoryDetails.length - 1 && <TimelineConnector />}
             </TimelineSeparator>
             <TimelineContent>
               <Typography fontWeight="600">
-                <Link href={category.link} underline="none">
+                <Link href={category.link} className='text-[#12117e]' underline="none">
                   {category.name}
                 </Link>
               </Typography>: {t('description')}: {category.description}

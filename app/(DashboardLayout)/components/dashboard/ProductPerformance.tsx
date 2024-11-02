@@ -103,7 +103,8 @@ const ProductPerformance: React.FC<ProductPerformanceProps> = ({ userData }) => 
             </Box>
             <Box mt={2} display="flex" justifyContent="flex-end">
                 <Button
-                    variant="outlined"
+                    variant="contained"
+                    className="bg-[#7ebe4b] hover:bg-[#7ebe4b90]"
                     onClick={() => router.push('/dashboard/utilities/users')}
                 >
                      {t('showMore')}

@@ -72,7 +72,7 @@ const CategoriesPage = () => {
   }
 
   return (
-    <Box p={4}>
+    <Box p={4} className="bg-black/40 px-3 py-5 rounded-lg">
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Typography variant="h4" gutterBottom>
           {t('categories')} {/* Use translation for the title */}
@@ -82,7 +82,7 @@ const CategoriesPage = () => {
             <Link href="/dashboard/utilities/categories/add" passHref>
               <Button
                 variant="contained"
-                color="primary"
+                className='bg-[#7ebe4b] hover:bg-[#7ebe4b90]'
                 startIcon={<IconPlus />}
                 component={motion.div}
                 whileHover={{ scale: 1.1 }}
@@ -96,7 +96,7 @@ const CategoriesPage = () => {
             <Link href="/dashboard/utilities/units/add" passHref>
               <Button
                 variant="contained"
-                color="primary"
+                className='bg-[#7ebe4b] hover:bg-[#7ebe4b90]'
                 startIcon={<IconPlus />}
                 component={motion.div}
                 whileHover={{ scale: 1.1 }}
@@ -106,11 +106,11 @@ const CategoriesPage = () => {
             </Link>
           </Tooltip>}
       </Box>
-      <Grid container spacing={3}>
+      <Grid container spacing={3} className=" px-3 py-5 ">
         {data?.map((category: any) => (
           <Grid item xs={12} sm={6} md={4} key={category._id}>
             <motion.div whileHover={{ scale: 1.05 }}>
-              <Card>
+              <Card className="bg-black/40 ">
                 <CardContent>
                   <Typography variant="h6">{category.name}</Typography>
                   <Typography color="textSecondary">{category.description}</Typography>
@@ -120,25 +120,28 @@ const CategoriesPage = () => {
                       <Link href={`/dashboard/utilities/categories/${category._id}`} passHref>
                         <Button
                           variant="outlined"
+                          className='border-[#7ebe4b] text-[#7ebe4b] hover:text-[#7ebe4b90]'
                           startIcon={<IconEye />}
                         >
-                          {t('viewCategory')} {/* Use translation for the button */}
+                          {t('viewCategory')} 
                         </Button>
                       </Link>
                     </Tooltip>
-
                     {!isLoadinguser && userData.role === "admin" &&
+                    <>
                       <Tooltip title={t('editCategory')} arrow>
-                        <IconButton onClick={() => handleEdit(category)}>
+                        <IconButton  className='text-[#12117e] hover:text-[#12117e90]'
+ onClick={() => handleEdit(category)}>
                           <IconEdit />
                         </IconButton>
                       </Tooltip>
-                      &&
                       <Tooltip title={t('deleteCategory')} arrow>
-                        <IconButton onClick={() => handleDelete(category._id)}>
+                        <IconButton color={"error"} onClick={() => handleDelete(category._id)}>
                           <IconTrash />
                         </IconButton>
-                      </Tooltip>}
+                      </Tooltip>
+                    </>
+                      }
                   </Box>
                 </CardContent>
               </Card>

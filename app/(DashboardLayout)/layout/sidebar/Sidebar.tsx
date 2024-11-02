@@ -34,7 +34,9 @@ const MSidebar = ({
       borderRadius: '15px',
     },
   };
-
+  const gradientBackground = {
+    background: 'linear-gradient(to bottom, #000000, #C3C3C3FF, #000000)',
+  };
   const { data: userData, isLoading:isLoadinguser} = useQuery({
     queryKey: ['userData'],
     queryFn: () => getUserData()
@@ -58,6 +60,7 @@ const MSidebar = ({
             sx: {
               boxSizing: "border-box",
               ...scrollbarStyles,
+              ...gradientBackground
             },
           }}
         >
@@ -86,8 +89,9 @@ const MSidebar = ({
                 {/* Sidebar Items */}
                 {/* ------------------------------------------- */}
                 <SidebarItems />
-                {!isLoadinguser&&userData.role==="admin"&&
-                <Upgrade />}
+                {/* {!isLoadinguser&&userData.role==="admin"&&
+                <Upgrade />
+                } */}
               </Box>
             </Sidebar >
           </Box>
@@ -131,8 +135,8 @@ const MSidebar = ({
           {/* Sidebar Items */}
           {/* ------------------------------------------- */}
           <SidebarItems />
-          {!isLoadinguser&&userData.role==="admin"&&
-          <Upgrade />}
+          {/* {!isLoadinguser&&userData.role==="admin"&&
+          <Upgrade />} */}
         </Sidebar>
       </Box>
       {/* ------------------------------------------- */}

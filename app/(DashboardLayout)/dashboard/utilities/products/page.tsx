@@ -93,7 +93,7 @@ const ProductsPage = () => {
   }
   const { getLang } = useStore();
   return (
-    <div>
+    <div className="bg-black/40 px-3 py-5 rounded-lg">
       <Box sx={{ display: 'flex', gap: "10px", flexWrap: "wrap", alignItems: 'center', }} dir={getLang()==="en"?"ltr":"rtl"}>
         <div className="flex justify-between items-center max-sm:w-full gap-3 flex-grow mb-2">
           <TextField
@@ -110,8 +110,7 @@ const ProductsPage = () => {
                 variant="contained"
                 color="primary"
                 startIcon={<IconPlus />}
-                className='flex gap-4'
-                
+                className='flex gap-4 bg-[#7ebe4b] hover:bg-[#7ebe4b90]'
                 component={motion.div}
                 whileHover={{ scale: 1.1 }}
                 >
@@ -125,7 +124,9 @@ const ProductsPage = () => {
           <Products refetch={refetch} />
           <Tooltip title="Add a new product" arrow>
             <Link href="/dashboard/utilities/products/add" passHref>
-              <Button variant="contained" color="primary" className='flex gap-4' startIcon={<IconLayoutGridAdd />}>
+              <Button variant="contained" 
+                              className='flex gap-4 bg-[#7ebe4b] hover:bg-[#7ebe4b90]'
+                           startIcon={<IconLayoutGridAdd />}>
                 {t('addProduct')}
               </Button>
             </Link>
@@ -257,7 +258,7 @@ const ProductsPage = () => {
             <Link href="/dashboard/utilities/units/add" passHref>
               <Button
                 variant="contained"
-                color="primary"
+                className='bg-[#7ebe4b] hover:bg-[#7ebe4b90]'
                 startIcon={<IconPlus />}
                 component={motion.div}
                 whileHover={{ scale: 1.1 }}
