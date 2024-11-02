@@ -28,11 +28,11 @@ console.log(total)
         <Table>
           <TableHead className="text-gray-900">
             <TableRow>
-              <Tooltip title="اسم المنتج" arrow><TableCell align="right" className="text-gray-900 font-bold border-l-4 border-b-2  border-gray-900" >اسم المنتج</TableCell></Tooltip>
-              <Tooltip title="سعر التجزئة" arrow><TableCell align="right" className="text-gray-900 font-bold border-l-4 border-b-2  border-gray-900">سعر التجزئة</TableCell></Tooltip>
-              <Tooltip title="سعر الجملة 1" arrow><TableCell align="right" className="text-gray-900 font-bold border-l-4 border-b-2  border-gray-900">سعر الجملة 1</TableCell></Tooltip>
-              <Tooltip title="سعر الجملة 2" arrow><TableCell align="right" className="text-gray-900 font-bold border-l-4 border-b-2  border-gray-900">سعر الجملة 2</TableCell></Tooltip>
-              <Tooltip title="التكلفة" arrow><TableCell align="right" className="text-gray-900 font-bold  border-l-0 border-b-2  border-gray-900">التكلفة</TableCell></Tooltip>
+              <Tooltip title="اسم المنتج" arrow><TableCell align="right" className="text-[#510101] text-[30px] font-bold border-l-4 border-b-2  border-gray-900" >اسم المنتج</TableCell></Tooltip>
+              <Tooltip title="سعر التجزئة" arrow><TableCell align="right" className="text-[#a48b00] text-[30px] font-bold border-l-4 border-b-2  border-gray-900">سعر التجزئة</TableCell></Tooltip>
+              <Tooltip title="سعر الجملة 1" arrow><TableCell align="right" className="text-[#a48b00] text-[30px] font-bold border-l-4 border-b-2  border-gray-900">سعر الجملة 1</TableCell></Tooltip>
+              <Tooltip title="سعر الجملة 2" arrow><TableCell align="right" className="text-[#a48b00] text-[30px] font-bold border-l-4 border-b-2  border-gray-900">سعر الجملة 2</TableCell></Tooltip>
+              <Tooltip title="التكلفة" arrow><TableCell align="right" className="text-[#a48b00] text-[30px] font-bold  border-l-0 border-b-2  border-gray-900">التكلفة</TableCell></Tooltip>
             </TableRow>
           </TableHead>
           <TableBody>
